@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: command === 'build' ? '/Gptc/' : '/',
+  base: command === 'build' ? '/GPTC-kannur/' : '/',
   server: {
     port: 3000,
     open: true
