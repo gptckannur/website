@@ -24,3 +24,8 @@ Thumbs.db
 
 # Local node
 .node/
+
+# Archives and non-project files
+*.zip
+Collage website wordpress/
+Tarang fest .txt
