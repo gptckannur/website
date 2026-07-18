@@ -32,7 +32,9 @@ export default function Footer({ onNavigate }) {
               <ul>
                 <li>
                   <MapPin size={16} />
-                  <span>Thottada, Kannur,<br/>Kerala 670007, India</span>
+                  <a href="https://www.google.com/maps/place/Government+Polytechnic+College,+Kannur/@11.8781989,75.4373111,17z" target="_blank" rel="noopener noreferrer">
+                    Thottada, Kannur,<br/>Kerala 670007, India
+                  </a>
                 </li>
                 <li>
                   <Phone size={16} />
@@ -75,7 +77,7 @@ export default function Footer({ onNavigate }) {
               <h4>Find Us</h4>
               <div className="footer__map-wrapper">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.1!2d75.3726!3d11.8712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba422f67dfafae1%3A0x25cec79c80bba9bd!2sGovernment%20Polytechnic%20College%2C%20Kannur!5e0!3m2!1sen!2sin!4v1700000000000"
+                  src="https://maps.google.com/maps?q=Government+Polytechnic+College,+Thottada,+Kannur,+Kerala+670007&t=&z=16&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="200"
                   style={{ border: 0, borderRadius: '12px' }}
@@ -85,6 +87,14 @@ export default function Footer({ onNavigate }) {
                   title="GPTC Kannur Map"
                 ></iframe>
               </div>
+              <a
+                href="https://www.google.com/maps/place/Government+Polytechnic+College,+Kannur/@11.8781989,75.4373111,17z"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'inline-block', marginTop: '10px', fontSize: '0.85rem', color: 'var(--primary-light)', textDecoration: 'none', fontWeight: '600' }}
+              >
+                View Larger Map &amp; Details &rarr;
+              </a>
             </div>
           </div>
         </div>

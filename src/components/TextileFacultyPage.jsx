@@ -6,42 +6,49 @@ import { ArrowLeft, Shirt, Users, Wrench, Phone, Mail } from 'lucide-react'
 const facultyMembers = [
   { 
     name: 'P SIVA KRISHNA', 
-    designation: 'Head of the Department (In-charge)', 
+    designation: 'Lecturer in Textile Technology (HOD In-charge)', 
     image: '/faculty/textile/P SIVA KRISHNA.jpg',
     mobile: '+91 8019980166',
     email: 'psk@gptckannur.ac.in'
   },
   { 
     name: 'GOLDA HONEY MADHU', 
-    designation: 'Lecturer', 
+    designation: 'Lecturer in Textile Technology', 
     image: '/faculty/textile/GOLDA HONEY MADHU.jpg',
     mobile: '+91 8547658088',
     email: 'goldamadhu@gmail.com'
   },
   { 
     name: 'ABHINAV VISHNU', 
-    designation: 'Guest Lecturer', 
+    designation: 'Lecturer in Textile Technology', 
     image: '/faculty/textile/ABHINAV VISHNU.jpg',
     mobile: '+91 7012993944',
     email: 'abhinavvishnu9@gmail.com'
   },
   { 
     name: 'AZHARUDHEEN T', 
-    designation: 'Guest Lecturer', 
+    designation: 'Guest Lecturer in Textile Technology', 
     image: '/faculty/textile/AZHARUDHEEN T.jpg',
     mobile: '+91 8113097654',
     email: 'psk@gptckannur.ac.in'
   },
-]
-
-const labStaff = [
   { 
     name: 'ANEESH KUMAR PD', 
-    designation: 'Demonstrator', 
+    designation: 'Lecturer in Textile Technology', 
     image: '/faculty/textile/ANEESH KUMAR PD.jpg',
     mobile: '+91 9656821660',
     email: 'aneeshkmr21@gmail.com'
   },
+  { 
+    name: 'ANOOP A N', 
+    designation: 'Guest Lecturer in Textile Technology', 
+    image: '/faculty/textile/ANOOP A N.jpg',
+    mobile: null,
+    email: null
+  },
+]
+
+const labStaff = [
   { 
     name: 'VIVEK K C', 
     designation: 'Demonstrator', 
@@ -62,20 +69,6 @@ const labStaff = [
     image: '/faculty/textile/RANJITHKUMAR K.jpg',
     mobile: '+91 7902288746',
     email: 'jithoosrk@gptckannur.ac.in'
-  },
-  { 
-    name: 'VIPINA K', 
-    designation: 'Tradesman (Guest)', 
-    image: '/faculty/textile/VIPINA K.jpg',
-    mobile: '+91 9747939032',
-    email: 'vipinak918@gptckannur.ac.in'
-  },
-  { 
-    name: 'SUMESH C', 
-    designation: 'Tradesman (Guest)', 
-    image: '/faculty/textile/SUMESH C.jpg',
-    mobile: '+91 9961257465',
-    email: 'sumeshchelankara4@gptckannu'
   },
 ]
 

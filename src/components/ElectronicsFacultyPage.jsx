@@ -1,16 +1,23 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
-import { ArrowLeft, Cpu, Users } from 'lucide-react'
+import { ArrowLeft, Cpu, Users, Wrench } from 'lucide-react'
 
 const facultyMembers = [
-  { name: 'SURESH BABU', designation: 'Head of Section (In-charge)', image: '/faculty/electronics/SURESH BABU.jpg' },
+  { name: 'RAJESH O K', designation: 'Head of Section (In-charge)', image: '/faculty/electronics/rajesh o k.jpeg' },
+  { name: 'SREEJITH', designation: 'Lecturer in Electronics', image: null },
+  { name: 'SUDHINA', designation: 'Lecturer', image: null },
   { name: 'LIJI C A', designation: 'Lecturer', image: '/faculty/electronics/LIJI C A.jpeg' },
-  { name: 'RAJESH O K', designation: 'Lecturer', image: '/faculty/electronics/rajesh o k.jpeg' },
-  { name: 'BHAVYA R', designation: 'Lecturer in Electronics (Guest)', image: '/faculty/electronics/BHAVYA R.jpg' },
-  { name: 'PRASANTHAN K', designation: 'Lecturer', image: '/faculty/electronics/PRASANTHAN K.jpeg' },
-  { name: 'RAMYA K V', designation: 'Lecturer in Computer Engineering (Guest)', image: '/faculty/electronics/RAMYA K V.jpeg' },
   { name: 'JITHIN LAL V K', designation: 'Lecturer', image: '/faculty/electronics/JITHIN LAL V K.jpg' },
+]
+
+const labStaff = [
+  { name: 'MUHAMMED SHAFEEQ KP', designation: 'Demonstrator', image: null },
+  { name: 'SAYOOJ P', designation: 'Demonstrator', image: null },
+  { name: 'NASER P K', designation: 'Trade Instructor', image: null },
+  { name: 'NISANTH S P', designation: 'Trade Instructor', image: null },
+  { name: 'SHERLY P', designation: 'Tradesman', image: null },
+  { name: 'ABHIYA JOY', designation: 'Tradesman', image: null },
 ]
 
 function FacultyCard({ member, index }) {
@@ -92,6 +99,21 @@ export default function ElectronicsFacultyPage() {
           </h2>
           <div className="faculty-grid">
             {facultyMembers.map((member, i) => (
+              <FacultyCard key={member.name} member={member} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Technical Staff Section */}
+      <section className="dept-page__section dept-page__section--alt">
+        <div className="container">
+          <h2 className="dept-page__section-title" data-animate="fade-up">
+            <Wrench size={24} />
+            Technical &amp; Lab Staff
+          </h2>
+          <div className="faculty-grid">
+            {labStaff.map((member, i) => (
               <FacultyCard key={member.name} member={member} index={i} />
             ))}
           </div>

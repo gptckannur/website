@@ -15,7 +15,7 @@ export default function About() {
           <div className="about__image-wrapper" data-animate="fade-right">
             <div className="about__image-card">
               <img
-                src=""
+                src={`${import.meta.env.BASE_URL}images/college-gate.jpg`}
                 alt="GPTC Kannur Campus"
                 loading="lazy"
               />

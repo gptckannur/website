@@ -29,3 +29,6 @@ Thumbs.db
 *.zip
 Collage website wordpress/
 Tarang fest .txt
+_backup/
+db.sql
+*.sql

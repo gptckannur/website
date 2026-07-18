@@ -9,7 +9,7 @@ const facultyMembers = [
   { name: 'LIJINA K', designation: 'Lecturer', image: '/faculty/electrical/LIJINA K.jpg' },
   { name: 'DEEPAK C', designation: 'Lecturer', image: '/faculty/electrical/DEEPAK C.jpg' },
   { name: 'VINESH BABU T P', designation: 'Lecturer', image: null },
-  { name: 'DEVIKA SASI P', designation: 'Guest Lecturer', image: '/faculty/electrical/DEVIKA SASI P.jpg' },
+  { name: 'FASIL RAHMAN', designation: 'Lecturer', image: null },
 ]
 
 const labStaff = [
@@ -17,7 +17,6 @@ const labStaff = [
   { name: 'NIPUNLAL THOTTATHIL', designation: 'Demonstrator', image: '/faculty/electrical/NIPUNLAL THOTTATHIL.jpg' },
   { name: 'TONY LUKOSE', designation: 'Demonstrator', image: '/faculty/electrical/TONY LUKOSE.jpg' },
   { name: 'NISANTH S P', designation: 'Trade Instructor', image: null },
-  { name: 'NIKHIL RAJ.N', designation: 'Tradesman', image: '/faculty/electrical/NIKHIL RAJ.N.jpg' },
 ]
 
 function FacultyCard({ member, index }) {

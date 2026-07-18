@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const slides = [
-  { src: 'https://images.unsplash.com/photo-1562774053-701939374585?w=1200&q=80', title: 'Welcome to GPTC Kannur', subtitle: 'Excellence in Technical Education since 1958' },
-  { src: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200&q=80', title: 'World-Class Campus', subtitle: 'Modern facilities across 6 engineering departments' },
+  { src: '/images/college-gate.jpg', title: 'Welcome to GPTC Kannur', subtitle: 'Excellence in Technical Education since 1958' },
+  { src: '/images/college-gate.jpg', title: 'World-Class Campus', subtitle: 'Modern facilities across 6 engineering departments' },
   { src: 'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=1200&q=80', title: 'Learn by Doing', subtitle: 'Practical, industry-oriented diploma programmes' },
   { src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', title: 'State-of-the-Art Labs', subtitle: 'Hands-on experience with modern equipment' },
 ]
@@ -45,7 +45,7 @@ export default function ImageSlider() {
           <div className="image-slider__track" style={{ transform: `translateX(-${current * 100}%)` }}>
             {slides.map((slide, i) => (
               <div className="image-slider__slide" key={i} role="tabpanel" aria-label={`Slide ${i + 1} of ${slides.length}`}>
-                <img src={slide.src} alt={slide.title} loading={i === 0 ? 'eager' : 'lazy'} />
+                <img src={slide.src.startsWith('http') ? slide.src : `${import.meta.env.BASE_URL}${slide.src.replace(/^\//, '')}`} alt={slide.title} loading={i === 0 ? 'eager' : 'lazy'} />
                 <div className="image-slider__overlay">
                   <h3>{slide.title}</h3>
                   <p>{slide.subtitle}</p>

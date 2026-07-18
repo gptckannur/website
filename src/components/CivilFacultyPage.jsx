@@ -17,7 +17,6 @@ const labStaff = [
   { name: 'MEKHA SHANTHAKUMAR', designation: 'Demonstrator', image: '/faculty/civil/MEKHA SHANTHAKUMAR.jpg' },
   { name: 'MURUKADAS K K', designation: 'Trade Instructor', image: '/faculty/civil/MURUKADAS K K.jpg' },
   { name: 'ANEESH K K', designation: 'Trade Instructor', image: '/faculty/civil/ANEESH K K.jpg' },
-  { name: 'SURJITH P', designation: 'Tradesman (Guest)', image: '/faculty/civil/SURJITH P.jpg' },
 ]
 
 function FacultyCard({ member, index }) {

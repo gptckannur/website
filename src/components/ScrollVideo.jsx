@@ -94,6 +94,7 @@ export default function ScrollVideo() {
             ref={videoRef}
             className={`scroll-video__player ${videoReady ? 'ready' : ''}`}
             src={`${import.meta.env.BASE_URL}videos/campus-scroll.mp4`}
+            poster={`${import.meta.env.BASE_URL}images/college-gate.jpg`}
             muted={isMuted}
             playsInline
             preload="auto"

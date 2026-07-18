@@ -10,13 +10,13 @@ export default function Principal() {
           <div className="principal__avatar">
             <img
               src={`${import.meta.env.BASE_URL}images/principal.jpg`}
-              alt="Pramod Chathampally - Principal"
+              alt="Dr. Asha Sukumaran - Principal"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }}
             />
           </div>
           <div className="principal__info">
             <span className="section__label">From the Desk of</span>
-            <h3 className="principal__name">Pramod Chathampally</h3>
+            <h3 className="principal__name">Dr. Asha Sukumaran</h3>
             <p className="principal__message">
               "Government Polytechnic College, Kannur has been at the forefront of technical education
               in northern Kerala since its inception. We are committed to nurturing technically competent,

@@ -91,6 +91,7 @@ export default function Hero({ onNavigate }) {
         <video
           className="hero__bg-video"
           src={`${import.meta.env.BASE_URL}videos/campus-scroll.mp4`}
+          poster={`${import.meta.env.BASE_URL}images/college-gate.jpg`}
           autoPlay
           loop
           muted

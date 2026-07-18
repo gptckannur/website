@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { X, ChevronLeft, ChevronRight, Maximize2, Camera, Trophy, Users } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Maximize2, Camera, Trophy, Users, Building } from 'lucide-react'
 
 const galleryImages = [
+  { src: '/gallery/college-gate.jpg', caption: 'Govt. Polytechnic College, Kannur — Main Entrance Gate (Est. 1958)', category: 'campus', size: 'large' },
   { src: '/gallery/Achievement1.jpg', caption: 'Third Prize — Seminar Competition, CALPIO 2026', category: 'achievements', size: 'large' },
   { src: '/gallery/Achievement2.jpg', caption: 'First Prize — Seminar Competition, CALPIO 2026', category: 'achievements', size: 'large' },
   { src: '/gallery/SPORTS.jpeg', caption: 'Inter Poly State Table Tennis — 2nd Runner Up', category: 'sports', size: 'tall' },
@@ -9,6 +10,7 @@ const galleryImages = [
 
 const categories = [
   { key: 'all', label: 'All Photos', icon: Camera },
+  { key: 'campus', label: 'Campus', icon: Building },
   { key: 'achievements', label: 'Achievements', icon: Trophy },
   { key: 'sports', label: 'Sports', icon: Users },
 ]

@@ -45,7 +45,7 @@ export default function PrincipalPage() {
         <div className="principal-page__hero-overlay"></div>
         <div className="container principal-page__hero-content">
           <span className="principal-page__label">From the Desk of the Principal</span>
-          <h1 className="principal-page__hero-title">Pramod Chathampally</h1>
+          <h1 className="principal-page__hero-title">Dr. Asha Sukumaran</h1>
           <p className="principal-page__hero-subtitle">Principal, Govt. Polytechnic College Thottada</p>
         </div>
       </section>
@@ -60,20 +60,20 @@ export default function PrincipalPage() {
                 <div className="principal-page__photo-wrapper">
                   <img
                     src={`${import.meta.env.BASE_URL}images/principal.jpg`}
-                    alt="Pramod Chathampally - Principal of Govt. Polytechnic College Thottada"
+                    alt="Dr. Asha Sukumaran - Principal of Govt. Polytechnic College Thottada"
                     className="principal-page__photo"
                   />
                   <div className="principal-page__photo-accent"></div>
                 </div>
                 <div className="principal-page__photo-info">
-                  <h3>Pramod Chathampally</h3>
+                  <h3>Dr. Asha Sukumaran</h3>
                   <span className="principal-page__designation">Principal</span>
                   <span className="principal-page__institution">Govt. Polytechnic College Thottada</span>
                 </div>
                 <div className="principal-page__contact-list">
-                  <a href="tel:9400201190" className="principal-page__contact-item">
+                  <a href="tel:9400210189" className="principal-page__contact-item">
                     <Phone size={16} />
-                    <span>9400201190</span>
+                    <span>9400210189</span>
                   </a>
                   <a href="mailto:kannurgptc@gmail.com" className="principal-page__contact-item">
                     <Mail size={16} />
@@ -164,7 +164,7 @@ export default function PrincipalPage() {
               <div className="principal-page__signature">
                 <div className="principal-page__signature-line"></div>
                 <div className="principal-page__signature-info">
-                  <strong>Pramod Chathampally</strong>
+                  <strong>Dr. Asha Sukumaran</strong>
                   <span>Principal</span>
                   <span>Govt. Polytechnic College Thottada, Kannur</span>
                 </div>

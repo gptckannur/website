@@ -14,7 +14,6 @@ const labStaff = [
   { name: 'JOGIL KUMAR K K', designation: 'Demonstrator', image: '/faculty/mechanical/JOGIL KUMAR K K.jpeg' },
   { name: 'NIDHIN V', designation: 'Demonstrator', image: '/faculty/mechanical/NIDHIN V.jpeg' },
   { name: 'ANEESH KUMAR M', designation: 'Workshop Supdt. In-charge', image: '/faculty/mechanical/ANEESH KUMAR M.jpeg' },
-  { name: 'SURESH KUMAR P', designation: 'Workshop Instructor', image: '/faculty/mechanical/SURESH KUMAR P.jpeg' },
   { name: 'PRADEEP KUMAR VK', designation: 'Workshop Instructor', image: '/faculty/mechanical/PRADEEP KUMAR VK.jpg' },
   { name: 'JYOTHISH KUMAR M', designation: 'Workshop Instructor', image: '/faculty/mechanical/JYOTHISH KUMAR M.jpeg' },
   { name: 'VARUNKUMAR', designation: 'Trade Instructor — Welding', image: '/faculty/mechanical/VARUNKUMAR.jpeg' },
