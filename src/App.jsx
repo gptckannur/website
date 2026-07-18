@@ -149,7 +149,7 @@ function MainLayout() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <SmoothScroll>
         <MainLayout />
       </SmoothScroll>
