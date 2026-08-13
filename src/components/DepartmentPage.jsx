@@ -8,6 +8,9 @@ import {
 } from 'lucide-react'
 import { departmentData } from '../data/departments'
 
+// Dynamically import all images from the department assets folders
+const allGalleryImages = import.meta.glob('/src/assets/departments/**/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG}', { eager: true, import: 'default' })
+
 const deptIcons = {
   civil: Building2,
   electrical: Zap,
@@ -37,6 +40,15 @@ export default function DepartmentPage() {
     rafIdRef.current = requestAnimationFrame(raf)
     return () => { if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current); lenis.destroy() }
   }, [deptSlug])
+
+  // Filter images for this department
+  const facilitiesImages = Object.keys(allGalleryImages)
+    .filter(path => path.includes(`/departments/${deptSlug}/facilities/`))
+    .map(path => allGalleryImages[path])
+
+  const achievementsImages = Object.keys(allGalleryImages)
+    .filter(path => path.includes(`/departments/${deptSlug}/achievements/`))
+    .map(path => allGalleryImages[path])
 
   // Scroll-reveal
   useEffect(() => {
@@ -219,6 +231,44 @@ export default function DepartmentPage() {
                 <div className="dept-page__outcome-card dept-page__outcome-card--peo" key={i} data-animate="fade-up" data-delay={i * 100}>
                   <span className="dept-page__outcome-badge dept-page__outcome-badge--peo">PEO{i + 1}</span>
                   <p>{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Facilities Gallery */}
+      {facilitiesImages.length > 0 && (
+        <section className="dept-page__section">
+          <div className="container">
+            <h2 className="dept-page__section-title" data-animate="fade-up">
+              <Building2 size={24} />
+              Facilities
+            </h2>
+            <div className="dept-page__gallery-grid">
+              {facilitiesImages.map((src, i) => (
+                <div className="dept-page__gallery-item" key={i} data-animate="fade-up" data-delay={i * 100}>
+                  <img src={src} alt={`Facility ${i + 1}`} loading="lazy" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Achievements Gallery */}
+      {achievementsImages.length > 0 && (
+        <section className="dept-page__section dept-page__section--alt">
+          <div className="container">
+            <h2 className="dept-page__section-title" data-animate="fade-up">
+              <Award size={24} />
+              Achievements
+            </h2>
+            <div className="dept-page__gallery-grid">
+              {achievementsImages.map((src, i) => (
+                <div className="dept-page__gallery-item" key={i} data-animate="fade-up" data-delay={i * 100}>
+                  <img src={src} alt={`Achievement ${i + 1}`} loading="lazy" />
                 </div>
               ))}
             </div>
