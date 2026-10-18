@@ -135,12 +135,13 @@ export default function CustomPage() {
                   ),
                   a: ({href, children}) => {
                     const isExternal = href && (href.startsWith('http') || href.startsWith('//'))
+                    const isPdf = href && href.toLowerCase().endsWith('.pdf')
                     return (
                       <a
                         href={href}
-                        target={isExternal ? '_blank' : undefined}
-                        rel={isExternal ? 'noopener noreferrer' : undefined}
-                        className="custom-page__link"
+                        target={isExternal || isPdf ? '_blank' : undefined}
+                        rel={isExternal || isPdf ? 'noopener noreferrer' : undefined}
+                        className={isPdf ? 'tender-download-btn' : 'custom-page__link'}
                       >
                         {children}
                       </a>
