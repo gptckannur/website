@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Play, Volume2, VolumeX } from 'lucide-react'
+import { HERO_VIDEO, HERO_POSTER } from '../mediaPaths'
 
 export default function ScrollVideo() {
   const sectionRef = useRef(null)
@@ -93,8 +94,8 @@ export default function ScrollVideo() {
           <video
             ref={videoRef}
             className={`scroll-video__player ${videoReady ? 'ready' : ''}`}
-            src={`${import.meta.env.BASE_URL}videos/campus-scroll.mp4`}
-            poster={`${import.meta.env.BASE_URL}images/college-gate.jpg`}
+            src={HERO_VIDEO}
+            poster={HERO_POSTER}
             muted={isMuted}
             playsInline
             preload="auto"

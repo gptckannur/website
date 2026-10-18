@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { ChevronDown } from 'lucide-react'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
+import { ChevronDown, ExternalLink } from 'lucide-react'
+import { LOGO } from '../mediaPaths'
+import navData from '../data/navigation.json'
+import TenderLogo from './TenderLogo'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -95,7 +98,7 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${!isHome ? 'navbar--subpage' : ''}`} id="navbar" role="navigation" aria-label="Main navigation">
         <div className="container navbar__inner">
           <a href="#" className="navbar__brand" onClick={(e) => scrollTo(e, 'hero')} aria-label="GPTC Kannur - Go to homepage">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <div className="navbar__brand-text">
               <span className="navbar__title">Govt. Polytechnic College</span>
               <span className="navbar__subtitle">Kannur, Kerala</span>
@@ -115,6 +118,8 @@ export default function Navbar() {
                 <li role="none"><button onClick={(e) => scrollTo(e, 'about')} role="menuitem">The College</button></li>
                 <li role="none"><button onClick={goToPage('/principal')} role="menuitem">The Principal</button></li>
                 <li role="none"><button onClick={(e) => scrollTo(e, 'vision')} role="menuitem">Vision &amp; Mission</button></li>
+                <li role="none"><button onClick={goToPage('/office-staff')} role="menuitem">Office &amp; Admin Staff</button></li>
+                <li role="none"><button onClick={goToPage('/general-staff')} role="menuitem">General Dept. Staff</button></li>
               </ul>
             </li>
 
@@ -129,6 +134,7 @@ export default function Navbar() {
                 <li role="none"><button onClick={goToPage('/department/mechanical')} role="menuitem">Mechanical Engineering</button></li>
                 <li role="none"><button onClick={goToPage('/department/textile')} role="menuitem">Textile Technology</button></li>
                 <li role="none"><button onClick={goToPage('/department/wood')} role="menuitem">Wood &amp; Paper Technology</button></li>
+                <li role="none"><button onClick={goToPage('/general-staff')} role="menuitem">General Department</button></li>
               </ul>
             </li>
 
@@ -150,8 +156,8 @@ export default function Navbar() {
                 Facilities <ChevronDown className="icon-xs" />
               </button>
               <ul className="navbar__dropdown-menu" role="menu">
-                <li role="none"><button onClick={(e) => scrollTo(e, 'facility-nss')} role="menuitem">NSS</button></li>
                 <li role="none"><button onClick={goToPage('/placement-cell')} role="menuitem">Training &amp; Placement Cell (TPC)</button></li>
+                <li role="none"><button onClick={(e) => scrollTo(e, 'facility-nss')} role="menuitem">NSS</button></li>
                 <li role="none"><button onClick={(e) => scrollTo(e, 'facility-ncc')} role="menuitem">National Cadet Corps (NCC)</button></li>
                 <li role="none"><button onClick={(e) => scrollTo(e, 'facility-library')} role="menuitem">Library</button></li>
                 <li role="none"><button onClick={(e) => scrollTo(e, 'facility-labs')} role="menuitem">Laboratories</button></li>
@@ -166,6 +172,59 @@ export default function Navbar() {
             <li role="none">
               <button className={`navbar__link ${isHome && activeSection === 'contact' ? 'active' : ''}`} onClick={(e) => scrollTo(e, 'contact')} role="menuitem">Contact</button>
             </li>
+
+            {/* Dynamic CMS-managed navigation items + auto-linked custom pages */}
+            {(() => {
+              // Import custom pages inline
+              const pageModules = import.meta.glob('../data/pages/*.json', { eager: true })
+              const pageItems = Object.values(pageModules)
+                .map(mod => mod.default || mod)
+                .filter(p => p.published !== false && p.showInNavbar)
+                .map(p => ({
+                  label: p.title,
+                  url: `/page/${p.slug}`,
+                  openInNewTab: false,
+                  order: p.navOrder || 10,
+                  _type: 'page'
+                }))
+              const navItems = (navData.navbar || []).map(item => ({ ...item, _type: 'nav' }))
+              const allItems = [...navItems, ...pageItems].sort((a, b) => (a.order || 99) - (b.order || 99))
+
+              return allItems.map((item, i) => {
+                const isExternal = item.url && (item.url.startsWith('http') || item.url.startsWith('//'))
+                const isTender = item.label?.toLowerCase().includes('tender') || item.url?.includes('tender')
+                const linkClass = isTender ? 'navbar__link navbar__link--tender' : 'navbar__link'
+
+                return (
+                  <li key={`dyn-${i}`} role="none">
+                    {isExternal || item.openInNewTab ? (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={linkClass}
+                        role="menuitem"
+                      >
+                        {isTender && <TenderLogo size={18} glow />}
+                        <span>{item.label}</span>
+                        {isTender && <span className="navbar__tender-badge">NOTICE</span>}
+                        {!isTender && <ExternalLink size={12} style={{ marginLeft: 4, opacity: 0.6 }} />}
+                      </a>
+                    ) : (
+                      <button
+                        className={linkClass}
+                        onClick={goToPage(item.url)}
+                        role="menuitem"
+                      >
+                        {isTender && <TenderLogo size={18} glow />}
+                        <span>{item.label}</span>
+                        {isTender && <span className="navbar__tender-badge">NOTICE</span>}
+                      </button>
+                    )}
+                  </li>
+                )
+              })
+            })()}
           </ul>
 
           <button className={`navbar__toggle ${menuOpen ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'}>

@@ -1,0 +1,31 @@
+{
+  "events": [
+    {
+      "title": "NSS 7 Day Camp — 'Lakshya'",
+      "category": "NSS",
+      "desc": "A week-long NSS special camp focusing on community service, social awareness, and personality development of students.",
+      "day": "27",
+      "month": "DEC",
+      "featured": true,
+      "image": "/media/events/event-1.jpg"
+    },
+    {
+      "title": "Annual Sports Day",
+      "category": "Sports",
+      "desc": "Annual athletic meet featuring inter-departmental competitions in track & field, team sports, and more.",
+      "day": "15",
+      "month": "JAN",
+      "featured": false,
+      "image": "/media/events/event-2.jpg"
+    },
+    {
+      "title": "Arts & Cultural Fest",
+      "category": "Cultural",
+      "desc": "A vibrant celebration of talent showcasing music, dance, drama, and literary competitions across departments.",
+      "day": "10",
+      "month": "FEB",
+      "featured": false,
+      "image": "/media/events/event-3.jpg"
+    }
+  ]
+}

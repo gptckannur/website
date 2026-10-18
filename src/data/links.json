@@ -1,0 +1,23 @@
+{
+  "importantLinks": [
+    { "label": "State Board of Technical Education", "url": "https://www.sbte.kerala.gov.in/" },
+    { "label": "Admission to Polytechnic Colleges", "url": "https://www.polyadmission.org/" },
+    { "label": "DTE Kerala", "url": "http://www.dtekerala.gov.in/index.php/en/" },
+    { "label": "AICTE", "url": "https://www.aicte-india.org/" },
+    { "label": "Higher Education Department", "url": "http://www.highereducation.kerala.gov.in/" },
+    { "label": "SPARK", "url": "https://www.spark.gov.in/webspark/" },
+    { "label": "DDFS", "url": "https://ddfs.dtekerala.gov.in/ddfs/login.do" }
+  ],
+  "quickLinks": [
+    { "label": "Online Grievance Redressal", "url": "https://docs.google.com/forms/d/1m0mswh0DsQRnHQqF2MzRSVJg9vU5kkq76XP5hNdZRZc/edit" },
+    { "label": "Extension of Approval (EOA)", "url": "#" },
+    { "label": "Mandatory Disclosure", "url": "#" },
+    { "label": "Feedback", "url": "#" },
+    { "label": "Committees", "url": "#committees" }
+  ],
+  "antiRagging": {
+    "phone": "1800-180-5522",
+    "email": "helpline@antiragging.in",
+    "url": "https://antiragging.in/"
+  }
+}

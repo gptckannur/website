@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visual Page Builder — GPTC Kannur</title>
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link href="https://unpkg.com/grapesjs@0.21.13/dist/css/grapes.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ======================================================================
+       DARK THEME FOR GRAPESJS EDITOR
+       ====================================================================== */
+    :root {
+      --gjs-bg: #0f1623;
+      --gjs-bg-secondary: #161e2e;
+      --gjs-bg-tertiary: #1c2638;
+      --gjs-border: #283347;
+      --gjs-text: #e2e8f0;
+      --gjs-text-muted: #8892a4;
+      --gjs-primary: #2980b9;
+      --gjs-primary-light: #3498db;
+      --gjs-accent: #e67e22;
+      --gjs-accent-light: #f39c12;
+      --gjs-success: #27ae60;
+      --gjs-danger: #e74c3c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--gjs-bg);
+      color: var(--gjs-text);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* ---- Top Header Bar ---- */
+    .builder-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      padding: 0 16px;
+      background: var(--gjs-bg-secondary);
+      border-bottom: 1px solid var(--gjs-border);
+      z-index: 100;
+    }
+    .builder-header__left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .builder-header__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gjs-text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .builder-header__back:hover {
+      background: var(--gjs-bg-tertiary);
+      color: var(--gjs-text);
+    }
+    .builder-header__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gjs-text);
+    }
+    .builder-header__title span {
+      color: var(--gjs-accent-light);
+    }
+    .builder-header__center {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .builder-header__device-btn {
+      padding: 6px 10px;
+      border: none;
+      background: transparent;
+      color: var(--gjs-text-muted);
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .builder-header__device-btn:hover {
+      background: var(--gjs-bg-tertiary);
+      color: var(--gjs-text);
+    }
+    .builder-header__device-btn.active {
+      background: var(--gjs-primary);
+      color: #fff;
+    }
+    .builder-header__right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .builder-btn {
+      padding: 7px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .builder-btn--secondary {
+      background: var(--gjs-bg-tertiary);
+      color: var(--gjs-text);
+      border: 1px solid var(--gjs-border);
+    }
+    .builder-btn--secondary:hover { background: #243044; }
+    .builder-btn--primary {
+      background: var(--gjs-primary);
+      color: #fff;
+    }
+    .builder-btn--primary:hover { background: var(--gjs-primary-light); }
+    .builder-btn--success {
+      background: var(--gjs-success);
+      color: #fff;
+    }
+    .builder-btn--success:hover { background: #2ecc71; }
+
+    /* ---- Save Toast ---- */
+    .builder-toast {
+      position: fixed;
+      top: 64px;
+      right: 20px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .builder-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .builder-toast--success {
+      background: rgba(39,174,96,0.95);
+      color: #fff;
+    }
+    .builder-toast--error {
+      background: rgba(231,76,60,0.95);
+      color: #fff;
+    }
+
+    /* ---- Main Editor Container ---- */
+    .builder-editor {
+      height: calc(100vh - 52px);
+    }
+
+    /* ---- GrapeJS Dark Theme Overrides ---- */
+    .gjs-one-bg { background-color: var(--gjs-bg-secondary) !important; }
+    .gjs-two-color { color: var(--gjs-text) !important; }
+    .gjs-three-bg { background-color: var(--gjs-bg-tertiary) !important; }
+    .gjs-four-color, .gjs-four-color-h:hover { color: var(--gjs-primary-light) !important; }
+
+    /* Panels */
+    .gjs-pn-panel { background: var(--gjs-bg-secondary) !important; border-color: var(--gjs-border) !important; }
+    .gjs-pn-views-container { background: var(--gjs-bg-secondary) !important; border-left: 1px solid var(--gjs-border) !important; }
+    .gjs-pn-views { border-bottom: 1px solid var(--gjs-border) !important; }
+    .gjs-pn-btn { color: var(--gjs-text-muted) !important; }
+    .gjs-pn-btn.gjs-pn-active { color: var(--gjs-primary-light) !important; }
+
+    /* Canvas */
+    .gjs-cv-canvas { background: #1a2234 !important; }
+    .gjs-frame-wrapper { background: #fff !important; }
+
+    /* Blocks */
+    .gjs-blocks-cs { background: var(--gjs-bg-secondary) !important; }
+    .gjs-block {
+      background: var(--gjs-bg-tertiary) !important;
+      border: 1px solid var(--gjs-border) !important;
+      border-radius: 8px !important;
+      color: var(--gjs-text) !important;
+      min-height: auto !important;
+      padding: 10px 6px !important;
+      margin: 4px !important;
+      transition: all 0.2s !important;
+    }
+    .gjs-block:hover {
+      border-color: var(--gjs-primary) !important;
+      background: #1e2d42 !important;
+    }
+    .gjs-block__media { color: var(--gjs-accent-light) !important; }
+    .gjs-block-label {
+      font-size: 0.72rem !important;
+      font-weight: 500 !important;
+      color: var(--gjs-text-muted) !important;
+      margin-top: 4px !important;
+    }
+    .gjs-block-category .gjs-title {
+      background: var(--gjs-bg-tertiary) !important;
+      border-bottom: 1px solid var(--gjs-border) !important;
+      color: var(--gjs-text) !important;
+      font-weight: 600 !important;
+      font-size: 0.78rem !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      padding: 8px 12px !important;
+    }
+
+    /* Layer manager */
+    .gjs-layer { background: var(--gjs-bg-secondary) !important; color: var(--gjs-text) !important; }
+    .gjs-layer-name { color: var(--gjs-text) !important; }
+    .gjs-layers { background: var(--gjs-bg-secondary) !important; }
+
+    /* Style manager */
+    .gjs-sm-sector .gjs-sm-sector-title {
+      background: var(--gjs-bg-tertiary) !important;
+      border-color: var(--gjs-border) !important;
+      color: var(--gjs-text) !important;
+    }
+    .gjs-sm-sector .gjs-sm-properties { background: var(--gjs-bg-secondary) !important; }
+    .gjs-field { background: var(--gjs-bg-tertiary) !important; border-color: var(--gjs-border) !important; color: var(--gjs-text) !important; }
+    .gjs-field input, .gjs-field select { color: var(--gjs-text) !important; }
+    .gjs-sm-label { color: var(--gjs-text-muted) !important; }
+
+    /* Selector Manager */
+    .gjs-clm-tags { background: var(--gjs-bg-secondary) !important; }
+    .gjs-clm-tag { background: var(--gjs-bg-tertiary) !important; color: var(--gjs-text) !important; }
+
+    /* Traits */
+    .gjs-trt-traits { background: var(--gjs-bg-secondary) !important; }
+    .gjs-trt-trait { color: var(--gjs-text) !important; }
+
+    /* Toolbar */
+    .gjs-toolbar { background: var(--gjs-primary) !important; }
+
+    /* RTE */
+    .gjs-rte-toolbar { background: var(--gjs-bg-secondary) !important; border: 1px solid var(--gjs-border) !important; }
+    .gjs-rte-actionbar { background: var(--gjs-bg-secondary) !important; }
+    .gjs-rte-action { color: var(--gjs-text) !important; }
+
+    /* Loading overlay */
+    .builder-loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--gjs-bg);
+      z-index: 10000;
+      transition: opacity 0.4s;
+    }
+    .builder-loading.hidden { opacity: 0; pointer-events: none; }
+    .builder-loading__spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--gjs-border);
+      border-top-color: var(--gjs-primary-light);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .builder-loading__text {
+      color: var(--gjs-text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* No-page state */
+    .builder-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      height: calc(100vh - 52px);
+      color: var(--gjs-text-muted);
+    }
+    .builder-empty h2 { color: var(--gjs-text); font-size: 1.3rem; }
+    .builder-empty a { color: var(--gjs-primary-light); }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div class="builder-loading" id="loading">
+    <div class="builder-loading__spinner"></div>
+    <div class="builder-loading__text">Loading Page Builder...</div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="builder-toast" id="toast"></div>
+
+  <!-- Header -->
+  <div class="builder-header">
+    <div class="builder-header__left">
+      <a href="/admin/" class="builder-header__back">← Back to CMS</a>
+      <div class="builder-header__title" id="page-title">Page Builder</div>
+    </div>
+    <div class="builder-header__center">
+      <button class="builder-header__device-btn active" data-device="Desktop" title="Desktop">🖥️ Desktop</button>
+      <button class="builder-header__device-btn" data-device="Tablet" title="Tablet">📱 Tablet</button>
+      <button class="builder-header__device-btn" data-device="Mobile portrait" title="Mobile">📲 Mobile</button>
+    </div>
+    <div class="builder-header__right">
+      <button class="builder-btn builder-btn--secondary" id="btn-undo" title="Undo">↩️ Undo</button>
+      <button class="builder-btn builder-btn--secondary" id="btn-redo" title="Redo">↪️ Redo</button>
+      <button class="builder-btn builder-btn--secondary" id="btn-preview" title="Preview in new tab">👁️ Preview</button>
+      <button class="builder-btn builder-btn--secondary" id="btn-clear" title="Clear canvas">🗑️ Clear</button>
+      <button class="builder-btn builder-btn--success" id="btn-save" title="Save page">💾 Save</button>
+    </div>
+  </div>
+
+  <!-- GrapeJS Editor -->
+  <div class="builder-editor" id="gjs"></div>
+
+  <!-- GrapeJS Core -->
+  <script src="https://unpkg.com/grapesjs@0.21.13"></script>
+  <script src="https://unpkg.com/grapesjs-blocks-basic@1.0.2"></script>
+  <script src="https://unpkg.com/grapesjs-preset-webpage@1.0.3"></script>
+
+  <script>
+    // ========================================================================
+    // PAGE BUILDER INITIALIZATION
+    // ========================================================================
+
+    // Get slug from URL query string
+    var params = new URLSearchParams(window.location.search);
+    var pageSlug = params.get('slug');
+
+    if (!pageSlug) {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('gjs').innerHTML = '<div class="builder-empty"><h2>No page selected</h2><p>Open the page builder from the CMS: <a href="/admin/">/admin/</a> → Custom Pages → click a page → "Open Visual Builder"</p></div>';
+    } else {
+      initBuilder(pageSlug);
+    }
+
+    // ---- Toast notifications ----
+    function showToast(message, type) {
+      var toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'builder-toast builder-toast--' + (type || 'success') + ' show';
+      setTimeout(function() { toast.classList.remove('show'); }, 3000);
+    }
+
+    // ---- Main initialization ----
+    function initBuilder(slug) {
+      // Fetch page data first
+      fetch('/api/pages/' + slug)
+        .then(function(r) {
+          if (!r.ok) throw new Error('Page not found');
+          return r.json();
+        })
+        .then(function(pageData) {
+          document.getElementById('page-title').innerHTML = 'Editing: <span>' + (pageData.title || slug) + '</span>';
+          startEditor(slug, pageData);
+        })
+        .catch(function(err) {
+          document.getElementById('loading').classList.add('hidden');
+          document.getElementById('gjs').innerHTML = '<div class="builder-empty"><h2>Page not found: ' + slug + '</h2><p>Create this page first in the <a href="/admin/#/collections/pages">CMS</a>, then come back here.</p></div>';
+        });
+    }
+
+    function startEditor(slug, pageData) {
+      // CSS that will be injected into the canvas iframe so the preview looks like the live site
+      var canvasCSS = '\n' +
+        '@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");\n' +
+        'body { font-family: "Inter", sans-serif; color: #334155; line-height: 1.7; padding: 24px; }\n' +
+        'h1, h2, h3, h4, h5, h6 { color: #1e293b; line-height: 1.3; margin-bottom: 0.5em; }\n' +
+        'h1 { font-size: 2rem; font-weight: 800; }\n' +
+        'h2 { font-size: 1.5rem; font-weight: 700; color: #1a5276; border-bottom: 2px solid #e67e22; padding-bottom: 0.3em; margin-top: 1.5em; }\n' +
+        'h3 { font-size: 1.2rem; font-weight: 600; color: #2980b9; margin-top: 1.2em; }\n' +
+        'p { margin-bottom: 1em; font-size: 1rem; }\n' +
+        'a { color: #2980b9; }\n' +
+        'img { max-width: 100%; height: auto; border-radius: 8px; }\n' +
+        'table { width: 100%; border-collapse: collapse; margin: 1em 0; }\n' +
+        'th { background: #1a5276; color: #fff; padding: 10px 14px; text-align: left; font-size: 0.85rem; text-transform: uppercase; }\n' +
+        'td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; }\n' +
+        'tr:hover td { background: #f1f5f9; }\n' +
+        'blockquote { border-left: 4px solid #e67e22; background: #fff7ed; padding: 1rem 1.5rem; margin: 1.5em 0; border-radius: 0 8px 8px 0; font-style: italic; color: #92400e; }\n' +
+        'ul, ol { padding-left: 1.5rem; margin-bottom: 1em; }\n' +
+        'li { margin-bottom: 0.3em; }\n' +
+        'hr { border: none; border-top: 2px solid #e2e8f0; margin: 2em 0; }\n' +
+        /* Builder block styles */
+        '.cb-section { padding: 2rem 0; }\n' +
+        '.cb-columns { display: flex; gap: 24px; flex-wrap: wrap; }\n' +
+        '.cb-columns .cb-col { flex: 1; min-width: 200px; }\n' +
+        '.cb-button { display: inline-block; padding: 10px 24px; background: #1a5276; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.95rem; transition: background 0.2s; }\n' +
+        '.cb-button:hover { background: #2980b9; }\n' +
+        '.cb-button--accent { background: #e67e22; }\n' +
+        '.cb-button--accent:hover { background: #f39c12; }\n' +
+        '.cb-alert { padding: 1rem 1.5rem; border-radius: 8px; margin: 1em 0; font-size: 0.95rem; }\n' +
+        '.cb-alert--info { background: #eff6ff; border-left: 4px solid #2980b9; color: #1e40af; }\n' +
+        '.cb-alert--warning { background: #fffbeb; border-left: 4px solid #f39c12; color: #92400e; }\n' +
+        '.cb-alert--success { background: #f0fdf4; border-left: 4px solid #27ae60; color: #166534; }\n' +
+        '.cb-alert--danger { background: #fef2f2; border-left: 4px solid #e74c3c; color: #991b1b; }\n' +
+        '.cb-spacer { height: 40px; }\n' +
+        '.cb-figure { margin: 1.5em 0; text-align: center; }\n' +
+        '.cb-figure img { border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }\n' +
+        '.cb-figure figcaption { font-size: 0.85rem; color: #64748b; margin-top: 8px; }\n' +
+        '.cb-video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 1.5em 0; }\n' +
+        '.cb-video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }\n' +
+        '.cb-download { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 8px; text-decoration: none; color: #1a5276; font-weight: 600; transition: all 0.2s; }\n' +
+        '.cb-download:hover { background: #e2e8f0; }\n' +
+        '.cb-faq { margin: 0.5em 0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }\n' +
+        '.cb-faq summary { padding: 12px 16px; font-weight: 600; cursor: pointer; background: #f8fafc; }\n' +
+        '.cb-faq summary:hover { background: #f1f5f9; }\n' +
+        '.cb-faq > div, .cb-faq > p { padding: 12px 16px; }\n' +
+        '.cb-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; margin: 1em 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }\n' +
+        '';
+
+      // Determine initial content
+      var initialHtml = '';
+      if (pageData.body) {
+        initialHtml = pageData.body;
+      }
+
+      // Load stored builder project data if available
+      var storedProjectData = pageData.builderData || null;
+
+      // Initialize GrapeJS
+      var editor = grapesjs.init({
+        container: '#gjs',
+        height: '100%',
+        width: 'auto',
+        fromElement: false,
+        components: storedProjectData ? undefined : initialHtml,
+        style: '',
+        storageManager: false, // We handle saving manually
+        canvas: {
+          styles: [],
+          scripts: []
+        },
+        deviceManager: {
+          devices: [
+            { name: 'Desktop', width: '' },
+            { name: 'Tablet', width: '768px', widthMedia: '992px' },
+            { name: 'Mobile portrait', width: '375px', widthMedia: '480px' }
+          ]
+        },
+        plugins: ['gjs-blocks-basic', 'gjs-preset-webpage'],
+        pluginsOpts: {
+          'gjs-blocks-basic': {
+            blocks: ['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video', 'map'],
+            flexGrid: true,
+          },
+          'gjs-preset-webpage': {
+            modalImportTitle: 'Import HTML',
+            modalImportButton: 'Import',
+            modalImportLabel: '',
+            textCleanCanvas: 'Are you sure you want to clear the canvas?',
+          }
+        },
+      });
+
+      // Inject canvas CSS
+      editor.on('canvas:frame:load', function(e) {
+        var frameDoc = e.view && e.view.getDoc ? e.view.getDoc() : null;
+        if (!frameDoc) {
+          // Fallback: get iframe document
+          var iframes = document.querySelectorAll('.gjs-frame');
+          if (iframes.length) {
+            frameDoc = iframes[0].contentDocument || iframes[0].contentWindow.document;
+          }
+        }
+        if (frameDoc) {
+          var styleEl = frameDoc.createElement('style');
+          styleEl.textContent = canvasCSS;
+          frameDoc.head.appendChild(styleEl);
+        }
+      });
+
+      // Also try injecting after a short delay as fallback
+      setTimeout(function() {
+        var iframes = document.querySelectorAll('.gjs-frame');
+        if (iframes.length) {
+          try {
+            var doc = iframes[0].contentDocument || iframes[0].contentWindow.document;
+            if (doc && !doc.querySelector('#builder-canvas-css')) {
+              var s = doc.createElement('style');
+              s.id = 'builder-canvas-css';
+              s.textContent = canvasCSS;
+              doc.head.appendChild(s);
+            }
+          } catch(e) {}
+        }
+      }, 1500);
+
+      // Load stored project data if available
+      if (storedProjectData) {
+        try {
+          editor.loadProjectData(storedProjectData);
+        } catch(e) {
+          console.warn('Could not load stored builder data, falling back to HTML', e);
+          if (initialHtml) {
+            editor.setComponents(initialHtml);
+          }
+        }
+      }
+
+      // ---- Register Custom College Blocks ----
+      var bm = editor.BlockManager;
+
+      // Clear the "Extra" category defaults we don't need
+      // Keep the basics from the plugin but add our college-specific ones
+
+      bm.add('college-heading', {
+        label: 'Heading',
+        category: '📝 Content',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><text x="3" y="20" font-size="20" font-weight="bold" fill="currentColor">H</text></svg>',
+        content: '<h2>Section Heading</h2>',
+      });
+
+      bm.add('college-subheading', {
+        label: 'Sub-heading',
+        category: '📝 Content',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><text x="3" y="19" font-size="17" font-weight="bold" fill="currentColor">H3</text></svg>',
+        content: '<h3>Sub-section Heading</h3>',
+      });
+
+      bm.add('college-paragraph', {
+        label: 'Paragraph',
+        category: '📝 Content',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><path d="M4 6h16M4 10h16M4 14h12M4 18h8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+        content: '<p>Write your paragraph content here. Click to edit this text directly on the canvas.</p>',
+      });
+
+      bm.add('college-image', {
+        label: 'Image + Caption',
+        category: '📝 Content',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="9" r="2" fill="currentColor"/><path d="M3 17l5-5 4 4 3-3 6 6" stroke="currentColor" stroke-width="2" fill="none"/></svg>',
+        content: '<figure class="cb-figure"><img src="https://placehold.co/800x400/1a5276/fff?text=Upload+Image" alt="Image description" /><figcaption>Image caption</figcaption></figure>',
+      });
+
+      bm.add('college-table', {
+        label: 'Table',
+        category: '📝 Content',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="2"/><line x1="3" y1="15" x2="21" y2="15" stroke="currentColor" stroke-width="2"/><line x1="9" y1="3" x2="9" y2="21" stroke="currentColor" stroke-width="2"/><line x1="15" y1="3" x2="15" y2="21" stroke="currentColor" stroke-width="2"/></svg>',
+        content: '<table><thead><tr><th>Column 1</th><th>Column 2</th><th>Column 3</th></tr></thead><tbody><tr><td>Data 1</td><td>Data 2</td><td>Data 3</td></tr><tr><td>Data 4</td><td>Data 5</td><td>Data 6</td></tr></tbody></table>',
+      });
+
+      bm.add('college-blockquote', {
+        label: 'Quote / Callout',
+        category: '📝 Content',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><path d="M6 17h3l2-4V7H5v6h3M13 17h3l2-4V7h-6v6h3" fill="currentColor" opacity="0.7"/></svg>',
+        content: '<blockquote>Important note or highlighted quote goes here. This stands out from the regular text.</blockquote>',
+      });
+
+      bm.add('college-list', {
+        label: 'Bullet List',
+        category: '📝 Content',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><circle cx="5" cy="7" r="2" fill="currentColor"/><line x1="10" y1="7" x2="21" y2="7" stroke="currentColor" stroke-width="2"/><circle cx="5" cy="13" r="2" fill="currentColor"/><line x1="10" y1="13" x2="21" y2="13" stroke="currentColor" stroke-width="2"/><circle cx="5" cy="19" r="2" fill="currentColor"/><line x1="10" y1="19" x2="21" y2="19" stroke="currentColor" stroke-width="2"/></svg>',
+        content: '<ul><li>First item in the list</li><li>Second item in the list</li><li>Third item in the list</li></ul>',
+      });
+
+      bm.add('college-button', {
+        label: 'Button / CTA',
+        category: '🔘 Interactive',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="2" y="7" width="20" height="10" rx="5" fill="currentColor" opacity="0.7"/><text x="7" y="15" font-size="7" fill="white" font-weight="bold">Click</text></svg>',
+        content: '<a href="#" class="cb-button">Click Here →</a>',
+      });
+
+      bm.add('college-button-accent', {
+        label: 'Accent Button',
+        category: '🔘 Interactive',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="2" y="7" width="20" height="10" rx="5" fill="#e67e22" opacity="0.8"/><text x="5" y="15" font-size="7" fill="white" font-weight="bold">Action</text></svg>',
+        content: '<a href="#" class="cb-button cb-button--accent">Apply Now →</a>',
+      });
+
+      bm.add('college-download', {
+        label: 'Download Link',
+        category: '🔘 Interactive',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 17v2h14v-2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+        content: '<a href="#" class="cb-download" target="_blank">📎 Download Document (PDF)</a>',
+      });
+
+      bm.add('college-video', {
+        label: 'YouTube Video',
+        category: '🔘 Interactive',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="2" y="4" width="20" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="10,8 16,12 10,16" fill="currentColor"/></svg>',
+        content: '<div class="cb-video-wrap"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>',
+      });
+
+      bm.add('college-2col', {
+        label: '2 Columns',
+        category: '📐 Layout',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="2" y="3" width="9" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="3" width="9" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+        content: '<div class="cb-columns"><div class="cb-col"><p>Left column content</p></div><div class="cb-col"><p>Right column content</p></div></div>',
+      });
+
+      bm.add('college-3col', {
+        label: '3 Columns',
+        category: '📐 Layout',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="1" y="3" width="6" height="18" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><rect x="9" y="3" width="6" height="18" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17" y="3" width="6" height="18" rx="1" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+        content: '<div class="cb-columns"><div class="cb-col"><p>Column 1</p></div><div class="cb-col"><p>Column 2</p></div><div class="cb-col"><p>Column 3</p></div></div>',
+      });
+
+      bm.add('college-divider', {
+        label: 'Divider',
+        category: '📐 Layout',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>',
+        content: '<hr />',
+      });
+
+      bm.add('college-spacer', {
+        label: 'Spacer',
+        category: '📐 Layout',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><path d="M12 4v4m0 8v4M4 12h16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="3 3"/></svg>',
+        content: '<div class="cb-spacer"></div>',
+      });
+
+      bm.add('college-section', {
+        label: 'Section',
+        category: '📐 Layout',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="2" y="3" width="20" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><line x1="2" y1="8" x2="22" y2="8" stroke="currentColor" stroke-width="2"/></svg>',
+        content: '<section class="cb-section"><h2>Section Title</h2><p>Section content goes here.</p></section>',
+      });
+
+      bm.add('college-alert-info', {
+        label: 'Info Alert',
+        category: '📢 Alerts',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><circle cx="12" cy="12" r="10" fill="none" stroke="#2980b9" stroke-width="2"/><text x="10" y="17" font-size="14" fill="#2980b9" font-weight="bold">i</text></svg>',
+        content: '<div class="cb-alert cb-alert--info">ℹ️ <strong>Information:</strong> Important details for students and visitors.</div>',
+      });
+
+      bm.add('college-alert-warning', {
+        label: 'Warning Alert',
+        category: '📢 Alerts',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><path d="M12 3L2 21h20L12 3z" fill="none" stroke="#f39c12" stroke-width="2"/><text x="10" y="18" font-size="12" fill="#f39c12" font-weight="bold">!</text></svg>',
+        content: '<div class="cb-alert cb-alert--warning">⚠️ <strong>Notice:</strong> Please pay attention to this important announcement.</div>',
+      });
+
+      bm.add('college-alert-success', {
+        label: 'Success Alert',
+        category: '📢 Alerts',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><circle cx="12" cy="12" r="10" fill="none" stroke="#27ae60" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="#27ae60" stroke-width="2" fill="none"/></svg>',
+        content: '<div class="cb-alert cb-alert--success">✅ <strong>Success:</strong> The action was completed successfully.</div>',
+      });
+
+      bm.add('college-faq', {
+        label: 'FAQ Item',
+        category: '📢 Alerts',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><text x="9" y="17" font-size="14" fill="currentColor" font-weight="bold">?</text></svg>',
+        content: '<details class="cb-faq"><summary>Frequently Asked Question?</summary><div><p>Answer to the question goes here. Click the question to expand/collapse.</p></div></details>',
+      });
+
+      bm.add('college-card', {
+        label: 'Card',
+        category: '📐 Layout',
+        media: '<svg viewBox="0 0 24 24" width="32" height="32"><rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>',
+        content: '<div class="cb-card"><h3>Card Title</h3><p>Card content with details, descriptions, or important information.</p></div>',
+      });
+
+      // ---- Device Buttons ----
+      var deviceBtns = document.querySelectorAll('.builder-header__device-btn');
+      deviceBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var device = this.getAttribute('data-device');
+          editor.setDevice(device);
+          deviceBtns.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+        });
+      });
+
+      // ---- Toolbar Buttons ----
+      document.getElementById('btn-undo').addEventListener('click', function() {
+        editor.UndoManager.undo();
+      });
+
+      document.getElementById('btn-redo').addEventListener('click', function() {
+        editor.UndoManager.redo();
+      });
+
+      document.getElementById('btn-preview').addEventListener('click', function() {
+        if (slug) {
+          window.open('http://localhost:3000/page/' + slug, '_blank');
+        }
+      });
+
+      document.getElementById('btn-clear').addEventListener('click', function() {
+        if (confirm('Clear the entire canvas? This cannot be undone.')) {
+          editor.DomComponents.clear();
+          editor.CssComposer.clear();
+        }
+      });
+
+      // ---- Save Handler ----
+      document.getElementById('btn-save').addEventListener('click', function() {
+        savePageContent(editor, slug, pageData);
+      });
+
+      // Keyboard shortcut: Ctrl+S
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          e.preventDefault();
+          savePageContent(editor, slug, pageData);
+        }
+      });
+
+      // Hide loading overlay
+      document.getElementById('loading').classList.add('hidden');
+    }
+
+    // ---- Save function ----
+    function savePageContent(editor, slug, originalPageData) {
+      var saveBtn = document.getElementById('btn-save');
+      saveBtn.textContent = '⏳ Saving...';
+      saveBtn.disabled = true;
+
+      // Get the HTML output
+      var htmlContent = editor.getHtml();
+      var cssContent = editor.getCss();
+
+      // Get project data for lossless re-editing
+      var projectData = editor.getProjectData();
+
+      // Combine HTML with scoped styles
+      var fullBody = '';
+      if (cssContent && cssContent.trim()) {
+        fullBody = '<style>' + cssContent + '</style>\n' + htmlContent;
+      } else {
+        fullBody = htmlContent;
+      }
+
+      // Update the page data
+      var updatedData = Object.assign({}, originalPageData, {
+        body: fullBody,
+        builderData: projectData
+      });
+
+      // Save via the Vite middleware API
+      fetch('/api/pages/' + slug, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData, null, 2)
+      })
+      .then(function(r) {
+        if (!r.ok) throw new Error('Save failed');
+        return r.json();
+      })
+      .then(function() {
+        showToast('✅ Page saved successfully!', 'success');
+        // Update the original data reference so subsequent saves include all fields
+        Object.assign(originalPageData, updatedData);
+        saveBtn.innerHTML = '💾 Save';
+        saveBtn.disabled = false;
+      })
+      .catch(function(err) {
+        showToast('❌ Save failed: ' + err.message, 'error');
+        saveBtn.innerHTML = '💾 Save';
+        saveBtn.disabled = false;
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,32 +1,12 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Cog, Users, Wrench } from 'lucide-react'
+import { LOGO, facultyPhoto } from '../mediaPaths'
 
-const facultyMembers = [
-  { name: 'RAJESH N P', designation: 'Head of the Department (In-charge)', image: '/faculty/mechanical/RAJESH N P.jpg' },
-  { name: 'VINOD A', designation: 'Lecturer', image: '/faculty/mechanical/VINOD A.jpeg' },
-  { name: 'DIVESH KUMAR C', designation: 'Lecturer', image: '/faculty/mechanical/DIVESH KUMAR C.jpeg' },
-  { name: 'SUJITH KUMAR P', designation: 'Lecturer', image: '/faculty/mechanical/SUJITH KUMAR P.jpeg' },
-  { name: 'RATHNAKARAN T', designation: 'Lecturer', image: '/faculty/mechanical/RATHNAKARAN T.jpeg' },
-]
+import facultyData from '../data/faculty/mechanical.json'
 
-const labStaff = [
-  { name: 'JOGIL KUMAR K K', designation: 'Demonstrator', image: '/faculty/mechanical/JOGIL KUMAR K K.jpeg' },
-  { name: 'NIDHIN V', designation: 'Demonstrator', image: '/faculty/mechanical/NIDHIN V.jpeg' },
-  { name: 'ANEESH KUMAR M', designation: 'Workshop Supdt. In-charge', image: '/faculty/mechanical/ANEESH KUMAR M.jpeg' },
-  { name: 'PRADEEP KUMAR VK', designation: 'Workshop Instructor', image: '/faculty/mechanical/PRADEEP KUMAR VK.jpg' },
-  { name: 'JYOTHISH KUMAR M', designation: 'Workshop Instructor', image: '/faculty/mechanical/JYOTHISH KUMAR M.jpeg' },
-  { name: 'VARUNKUMAR', designation: 'Trade Instructor — Welding', image: '/faculty/mechanical/VARUNKUMAR.jpeg' },
-  { name: 'C K BIJU KUMAR R', designation: 'Trade Instructor — Sheet Metal', image: '/faculty/mechanical/C K BIJU KUMAR R.jpg' },
-  { name: 'DEEPAK E', designation: 'Trade Instructor — Machinist', image: '/faculty/mechanical/DEEPAK E.jpeg' },
-  { name: 'NIDHEESH P', designation: 'Trade Instructor — Foundry', image: '/faculty/mechanical/NIDHEESH P.jpeg' },
-  { name: 'ANOOP K', designation: 'Tradesman — Sheet Metal', image: '/faculty/mechanical/ANOOP K.jpeg' },
-  { name: 'SHAJI K P', designation: 'Trade Instructor — Carpentry', image: null },
-  { name: 'ANOOP A', designation: 'Trade Instructor — Fitting', image: '/faculty/mechanical/anoop a.jpeg' },
-  { name: 'AKSHAY P', designation: 'Tradesman — Fitting', image: '/faculty/mechanical/AKSHAY P.jpeg' },
-  { name: 'ROHITH MAVILA', designation: 'Tradesman — Smithy', image: '/faculty/mechanical/ROHITH MAVILA.jpg' },
-  { name: 'JIPSON GEORGE', designation: 'Tradesman — Carpentry', image: '/faculty/mechanical/JIPSON GEORGE.jpeg' },
-]
+const facultyMembers = facultyData.facultyMembers || []
+const labStaff = facultyData.labStaff || []
 
 function FacultyCard({ member, index }) {
   const initials = member.name.split(' ').map(w => w[0]).join('').slice(0, 2)
@@ -34,7 +14,7 @@ function FacultyCard({ member, index }) {
     <div className="faculty-card" data-animate="fade-up" data-delay={index * 60}>
       <div className="faculty-card__avatar">
         {member.image ? (
-          <img src={`${import.meta.env.BASE_URL}${member.image.replace(/^\//, '')}`} alt={member.name} loading="lazy" />
+          <img src={member.image} alt={member.name} loading="lazy" />
         ) : (
           <div className="faculty-card__initials">{initials}</div>
         )}
@@ -76,7 +56,7 @@ export default function MechanicalFacultyPage() {
             <span>Back to Mechanical Dept.</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>

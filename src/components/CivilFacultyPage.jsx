@@ -2,22 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
 import { ArrowLeft, Building2, Users, Wrench } from 'lucide-react'
+import { LOGO, facultyPhoto } from '../mediaPaths'
 
-const facultyMembers = [
-  { name: 'SARATH D', designation: 'Head of the Department (In-charge)', image: '/faculty/civil/SARATH D.jpg' },
-  { name: 'SMITHA K', designation: 'Lecturer', image: '/faculty/civil/SMITHA K.jpg' },
-  { name: 'SWATHI KRISHNA BS', designation: 'Lecturer', image: '/faculty/civil/SWATHI KRISHNA BS.jpg' },
-  { name: 'ASEEJA P K', designation: 'Lecturer', image: '/faculty/civil/ASEEJA P K.jpg' },
-  { name: 'BINUSREE KS', designation: 'Lecturer', image: '/faculty/civil/BINUSREE KS.jpg' },
-  { name: 'AMAL V K', designation: 'Lecturer', image: '/faculty/civil/AMAL V K.jpg' },
-]
+import facultyData from '../data/faculty/civil.json'
 
-const labStaff = [
-  { name: 'PRAJEESHA T', designation: 'Demonstrator', image: '/faculty/civil/PRAJEESHA T.jpg' },
-  { name: 'MEKHA SHANTHAKUMAR', designation: 'Demonstrator', image: '/faculty/civil/MEKHA SHANTHAKUMAR.jpg' },
-  { name: 'MURUKADAS K K', designation: 'Trade Instructor', image: '/faculty/civil/MURUKADAS K K.jpg' },
-  { name: 'ANEESH K K', designation: 'Trade Instructor', image: '/faculty/civil/ANEESH K K.jpg' },
-]
+const facultyMembers = facultyData.facultyMembers || []
+const labStaff = facultyData.labStaff || []
 
 function FacultyCard({ member, index }) {
   const initials = member.name.split(' ').map(w => w[0]).join('').slice(0, 2)
@@ -25,7 +15,7 @@ function FacultyCard({ member, index }) {
     <div className="faculty-card" data-animate="fade-up" data-delay={index * 60}>
       <div className="faculty-card__avatar">
         {member.image ? (
-          <img src={`${import.meta.env.BASE_URL}${member.image.replace(/^\//, '')}`} alt={member.name} loading="lazy" />
+          <img src={member.image} alt={member.name} loading="lazy" />
         ) : (
           <div className="faculty-card__initials">{initials}</div>
         )}
@@ -67,7 +57,7 @@ export default function CivilFacultyPage() {
             <span>Back to Civil Dept.</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>

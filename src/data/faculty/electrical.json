@@ -1,0 +1,16 @@
+{
+  "facultyMembers": [
+    { "name": "SHAJUL DINESH A", "designation": "Head of the Department (In-charge)", "image": "/media/faculty/electrical/shajul dinesh a.jpg" },
+    { "name": "ASWANTHLAL A", "designation": "Lecturer", "image": "/media/faculty/electrical/aswanthlal a.jpg" },
+    { "name": "LIJINA K", "designation": "Lecturer", "image": "/media/faculty/electrical/LIJINA K.jpg" },
+    { "name": "DEEPAK C", "designation": "Lecturer", "image": "/media/faculty/electrical/DEEPAK C.jpg" },
+    { "name": "VINESH BABU T P", "designation": "Lecturer", "image": "" },
+    { "name": "FASIL RAHMAN", "designation": "Lecturer", "image": "" }
+  ],
+  "labStaff": [
+    { "name": "AJITH P.", "designation": "Demonstrator", "image": "/media/faculty/electrical/AJITH P..jpg" },
+    { "name": "NIPUNLAL THOTTATHIL", "designation": "Demonstrator", "image": "/media/faculty/electrical/NIPUNLAL THOTTATHIL.jpg" },
+    { "name": "TONY LUKOSE", "designation": "Demonstrator", "image": "/media/faculty/electrical/TONY LUKOSE.jpg" },
+    { "name": "NISANTH S P", "designation": "Trade Instructor", "image": "" }
+  ]
+}

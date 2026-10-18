@@ -2,20 +2,9 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
 import { ArrowLeft, Briefcase, Users, Building, Award, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { LOGO, PLACEMENT_IMAGES } from '../mediaPaths'
 
-const galleryImages = [
-  { src: '/placement/Training_9-11.jpg', caption: 'Training Programme – Session 9-11' },
-  { src: '/placement/Training_9-11_Full-768x577.jpg', caption: 'Training Programme – Full Batch' },
-  { src: '/placement/Training_13-15-768x644.jpg', caption: 'Training Programme – Session 13-15' },
-  { src: '/placement/Training_13-15_Full-768x437.jpg', caption: 'Training Programme – Group Photo' },
-  { src: '/placement/Sai-Krishna-1536x1086.jpg', caption: 'Campus Placement Drive' },
-  { src: '/placement/1111-768x576.jpg', caption: 'Industry Interaction Session' },
-  { src: '/placement/11-768x383.jpg', caption: 'Placement Activities' },
-  { src: '/placement/988-768x479.jpg', caption: 'Skill Development Workshop' },
-  { src: '/placement/56tt-768x994.jpg', caption: 'Career Guidance Seminar' },
-  { src: '/placement/13-768x1101.jpg', caption: 'Student Achievement' },
-  { src: '/placement/hy-768x762.jpg', caption: 'TPC Event' },
-]
+const galleryImages = PLACEMENT_IMAGES
 
 export default function PlacementCellPage() {
   const lenisRef = useRef(null)
@@ -124,7 +113,7 @@ export default function PlacementCellPage() {
             <span>Back to Home</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>
@@ -208,7 +197,7 @@ export default function PlacementCellPage() {
           <div className="tpc-carousel__track" ref={carouselRef} data-lenis-prevent>
             {galleryImages.map((img, i) => (
               <div className="tpc-carousel__slide" key={i} onClick={() => openLightbox(i)}>
-                <img src={`${import.meta.env.BASE_URL}${img.src.replace(/^\//, '')}`} alt={img.caption} loading="lazy" />
+                <img src={img.src} alt={img.caption} loading="lazy" />
                 <div className="tpc-carousel__caption">
                   <span>{img.caption}</span>
                 </div>
@@ -234,7 +223,7 @@ export default function PlacementCellPage() {
               <ChevronLeft size={32} />
             </button>
             <div className="placement__lightbox-img-wrap">
-              <img src={`${import.meta.env.BASE_URL}${galleryImages[lightboxIndex].src.replace(/^\//, '')}`} alt={galleryImages[lightboxIndex].caption} />
+              <img src={galleryImages[lightboxIndex].src} alt={galleryImages[lightboxIndex].caption} />
               <div className="placement__lightbox-caption">
                 <span>{lightboxIndex + 1} / {galleryImages.length}</span>
                 <span>{galleryImages[lightboxIndex].caption}</span>
@@ -252,7 +241,7 @@ export default function PlacementCellPage() {
                 className={`placement__lightbox-thumb ${i === lightboxIndex ? 'active' : ''}`}
                 onClick={() => setLightboxIndex(i)}
               >
-                <img src={`${import.meta.env.BASE_URL}${img.src.replace(/^\//, '')}`} alt={img.caption} />
+                <img src={img.src} alt={img.caption} />
               </button>
             ))}
           </div>

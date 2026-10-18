@@ -1,7 +1,15 @@
 import React from 'react'
 import { Eye, Target, TrendingUp, Building, Handshake } from 'lucide-react'
+import visionData from '../data/vision.json'
+
+const MISSION_ICONS = [TrendingUp, Building, Handshake]
 
 export default function VisionMission() {
+  const {
+    vision = 'To empower the youth by imparting excellence in technical education and prepare the students as a valuable resource for industry and society by developing effective technical competency.',
+    missions = []
+  } = visionData || {}
+
   return (
     <section className="section vision" id="vision">
       <div className="container">
@@ -17,9 +25,7 @@ export default function VisionMission() {
             </div>
             <h3 className="vision__card-title">Our Vision</h3>
             <p className="vision__card-text">
-              "To empower the youth by imparting excellence in technical education and prepare
-              the students as a valuable resource for industry and society by developing
-              effective technical competency."
+              "{vision}"
             </p>
           </div>
           <div className="vision__card vision__card--mission" data-animate="fade-up" data-delay="200">
@@ -28,9 +34,13 @@ export default function VisionMission() {
             </div>
             <h3 className="vision__card-title">Our Mission</h3>
             <ul className="vision__list">
-              <li><TrendingUp size={16} /><span>To offer value-added qualitative technical education through effective teaching-learning process.</span></li>
-              <li><Building size={16} /><span>To provide adequate infrastructure to impart finest quality skill education.</span></li>
-              <li><Handshake size={16} /><span>To include area of specification which will offer interaction with the institution and industry for entrepreneurship.</span></li>
+              {missions.map((m, i) => {
+                const text = typeof m === 'string' ? m : m?.point || ''
+                const Icon = MISSION_ICONS[i] || TrendingUp
+                return (
+                  <li key={i}><Icon size={16} /><span>{text}</span></li>
+                )
+              })}
             </ul>
           </div>
         </div>

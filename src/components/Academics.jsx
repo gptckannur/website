@@ -1,16 +1,17 @@
 import React from 'react'
 import { BookOpen, Rocket, Monitor, FileText } from 'lucide-react'
 import useTilt from '../hooks/useTilt'
+import academicsData from '../data/academics.json'
 
-const programs = [
-  { icon: BookOpen, title: 'Diploma Programmes', desc: 'Three-year full-time diploma programmes in 6 engineering disciplines after 10th standard.', tag: 'Full Time • 3 Years', delay: 100 },
-  { icon: Rocket, title: 'Short Term Courses', desc: 'Industry-oriented short-term skill development courses to enhance employability and skills.', tag: 'Skill Development', delay: 200 },
-  { icon: Monitor, title: 'Moodle LMS', desc: 'Online learning management system for digital course materials and interactive learning.', link: 'https://gptkannur.infrastruct.in/', linkText: 'Access Moodle →', delay: 300 },
-  { icon: FileText, title: 'Question Papers', desc: 'Access previous year university examination question papers for all departments.', link: 'https://drive.google.com/drive/folders/1GJ61yptfG601LmjCy908sG6llr6UX81e', linkText: 'Download Papers →', delay: 400 },
-]
+const ICON_MAP = { BookOpen, Rocket, Monitor, FileText }
+
+const programs = (Array.isArray(academicsData) ? academicsData : (academicsData?.programs || [])).map((p, i) => ({
+  ...p,
+  delay: (i + 1) * 100,
+}))
 
 function AcademicCard({ prog }) {
-  const Icon = prog.icon
+  const Icon = ICON_MAP[prog.icon] || BookOpen
   const tiltRef = useTilt({ max: 12, scale: 1.05, speed: 400 })
   
   return (

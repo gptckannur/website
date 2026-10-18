@@ -1,7 +1,17 @@
 import React from 'react'
-import { MapPin, Phone, Mail } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { MapPin, Phone, Mail, Clock, ExternalLink, ChevronRight } from 'lucide-react'
+import { LOGO } from '../mediaPaths'
+import contactData from '../data/contact.json'
+import navData from '../data/navigation.json'
 
 export default function Footer({ onNavigate }) {
+  const {
+    address = 'Thottada, Kannur,\nKerala 670007, India',
+    phone = '0497 283 5106',
+    email = 'kannurgptc@gmail.com',
+  } = contactData || {}
+
   const handleNavClick = (e, sectionId) => {
     e.preventDefault()
     onNavigate(sectionId)
@@ -14,7 +24,7 @@ export default function Footer({ onNavigate }) {
           <div className="footer__grid">
             <div className="footer__brand" data-animate="fade-up">
               <div className="footer__logo">
-                <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img navbar__logo-img--lg" />
+                <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img navbar__logo-img--lg" />
                 <div>
                   <h3>Govt. Polytechnic College Kannur</h3>
                   <p className="footer__tagline">Knowledge is Power</p>
@@ -33,21 +43,21 @@ export default function Footer({ onNavigate }) {
                 <li>
                   <MapPin size={16} />
                   <a href="https://www.google.com/maps/place/Government+Polytechnic+College,+Kannur/@11.8781989,75.4373111,17z" target="_blank" rel="noopener noreferrer">
-                    Thottada, Kannur,<br/>Kerala 670007, India
+                    {address}
                   </a>
                 </li>
-                <li>
-                  <Phone size={16} />
-                  <a href="tel:04972835106">0497 283 5106</a>
-                </li>
-                <li>
-                  <Mail size={16} />
-                  <a href="mailto:kannurgptc@gmail.com">kannurgptc@gmail.com</a>
-                </li>
-                <li>
-                  <Mail size={16} />
-                  <a href="mailto:prl.gpt.knr@dte.kerala.gov.in">prl.gpt.knr@dte.kerala.gov.in</a>
-                </li>
+                {phone && (
+                  <li>
+                    <Phone size={16} />
+                    <a href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
+                  </li>
+                )}
+                {email && (
+                  <li>
+                    <Mail size={16} />
+                    <a href={`mailto:${email}`}>{email}</a>
+                  </li>
+                )}
               </ul>
             </div>
 
@@ -70,6 +80,40 @@ export default function Footer({ onNavigate }) {
                     </a>
                   </li>
                 ))}
+                {/* Dynamic CMS-managed footer links + auto-linked custom pages */}
+                {(() => {
+                  const pageModules = import.meta.glob('../data/pages/*.json', { eager: true })
+                  const pageItems = Object.values(pageModules)
+                    .map(mod => mod.default || mod)
+                    .filter(p => p.published !== false && p.showInFooter)
+                    .map(p => ({
+                      label: p.title,
+                      url: `/page/${p.slug}`,
+                      openInNewTab: false,
+                      order: p.navOrder || 10,
+                      _type: 'page'
+                    }))
+                  const navItems = (navData.footer || []).map(item => ({ ...item, _type: 'nav' }))
+                  const allItems = [...navItems, ...pageItems].sort((a, b) => (a.order || 99) - (b.order || 99))
+
+                  return allItems.map((item, i) => {
+                    const isExternal = item.url && (item.url.startsWith('http') || item.url.startsWith('//'))
+                    if (isExternal || item.openInNewTab) {
+                      return (
+                        <li key={`dyn-${i}`}>
+                          <a href={item.url} target="_blank" rel="noopener noreferrer">
+                            {item.label}
+                          </a>
+                        </li>
+                      )
+                    }
+                    return (
+                      <li key={`dyn-${i}`}>
+                        <Link to={item.url}>{item.label}</Link>
+                      </li>
+                    )
+                  })
+                })()}
               </ul>
             </div>
 

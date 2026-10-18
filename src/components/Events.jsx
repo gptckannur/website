@@ -1,44 +1,17 @@
 import React from 'react'
-import { HeartHandshake, Trophy, Palette, ArrowRight } from 'lucide-react'
+import { HeartHandshake, Trophy, Palette, Calendar, ArrowRight } from 'lucide-react'
+import eventsData from '../data/events.json'
 
-const events = [
-  {
-    icon: HeartHandshake,
-    title: "NSS 7 Day Camp — 'Lakshya'",
-    category: 'NSS',
-    desc: 'A week-long NSS special camp focusing on community service, social awareness, and personality development of students.',
-    day: '27',
-    month: 'DEC',
-    hue: 200,
-    featured: true,
-    delay: 100,
-    image: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80',
-  },
-  {
-    icon: Trophy,
-    title: 'Annual Sports Day',
-    category: 'Sports',
-    desc: 'Annual athletic meet featuring inter-departmental competitions in track & field, team sports, and more.',
-    day: '15',
-    month: 'JAN',
-    hue: 120,
-    featured: false,
-    delay: 200,
-    image: 'https://images.unsplash.com/photo-1461896836934-bd45ba8fcf9b?w=600&q=80',
-  },
-  {
-    icon: Palette,
-    title: 'Arts & Cultural Fest',
-    category: 'Cultural',
-    desc: 'A vibrant celebration of talent showcasing music, dance, drama, and literary competitions across departments.',
-    day: '10',
-    month: 'FEB',
-    hue: 40,
-    featured: false,
-    delay: 300,
-    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80',
-  },
-]
+const CATEGORY_MAP = {
+  NSS: { icon: HeartHandshake, hue: 200 },
+  Sports: { icon: Trophy, hue: 120 },
+  Cultural: { icon: Palette, hue: 40 },
+  Academic: { icon: Calendar, hue: 260 },
+  Workshop: { icon: Calendar, hue: 180 },
+  Placement: { icon: Trophy, hue: 150 },
+}
+
+const events = Array.isArray(eventsData) ? eventsData : (eventsData?.events || [])
 
 export default function Events() {
   return (
@@ -51,21 +24,24 @@ export default function Events() {
         </div>
 
         <div className="events__grid">
-          {events.map((ev, i) => (
-            <div
-              className={`event-card ${ev.featured ? 'event-card--featured' : ''}`}
-              key={i}
-              data-animate="fade-up"
-              data-delay={ev.delay}
-            >
-              <div className="event-card__image">
-                {ev.image ? (
-                  <img src={ev.image} alt={ev.title} loading="lazy" />
-                ) : (
-                  <div className="event-card__image-placeholder" style={{ '--ev-hue': ev.hue }}>
-                    <ev.icon size={48} />
-                  </div>
-                )}
+          {events.map((ev, i) => {
+            const meta = CATEGORY_MAP[ev.category] || { icon: Calendar, hue: 200 }
+            const Icon = meta.icon
+            return (
+              <div
+                className={`event-card ${ev.featured ? 'event-card--featured' : ''}`}
+                key={i}
+                data-animate="fade-up"
+                data-delay={(i + 1) * 100}
+              >
+                <div className="event-card__image">
+                  {ev.image ? (
+                    <img src={ev.image} alt={ev.title} loading="lazy" />
+                  ) : (
+                    <div className="event-card__image-placeholder" style={{ '--ev-hue': meta.hue }}>
+                      <Icon size={48} />
+                    </div>
+                  )}
                 <div className="event-card__date">
                   <span className="event-card__day">{ev.day}</span>
                   <span className="event-card__month">{ev.month}</span>
@@ -80,7 +56,8 @@ export default function Events() {
                 </a>
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>

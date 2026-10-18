@@ -1,0 +1,16 @@
+{
+  "name": "Dr. Asha Sukumaran",
+  "designation": "Principal",
+  "institution": "Govt. Polytechnic College Thottada",
+  "photo": "/media/principal/photo.jpg",
+  "phone": "9400210189",
+  "email": "kannurgptc@gmail.com",
+  "homepageQuote": "Government Polytechnic College, Kannur has been at the forefront of technical education in northern Kerala since its inception. We are committed to nurturing technically competent, ethically strong, and socially responsible diploma engineers.",
+  "fullMessageTitle": "Empowering Tomorrow's Technologists Today",
+  "leadText": "Govt.Polytechnic College Thottada is a leading institution dedicated to empowering the youth by imparting excellence in technical education and prepare them as a valuable resource for industry and society.",
+  "paragraphs": [
+    { "paragraph": "We provide value added technical education, fostering innovative thinking through effective teaching learning process. Our dedicated faculty, cutting edge facilities and industry collaborations ensure students receive a well-rounded education. The institute aims to nurture talented professionals by encouraging research and innovation and develop them into socially responsible leaders, by providing adequate infrastructure to impart finest quality skill education." },
+    { "paragraph": "With a strong focus on hands-on learning, research, and innovation, our students gain practical skills and real-world experience. Our expert faculty, state-of-the-art infrastructure, and strategic industry partnerships ensure our graduates are job-ready and future-proof." }
+  ],
+  "closingText": "Join us in shaping the next generation of skilled professionals and entrepreneurs, driving Kerala's technological advancement and economic growth."
+}

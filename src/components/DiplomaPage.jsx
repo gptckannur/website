@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
+import { LOGO } from '../mediaPaths'
 import { ArrowLeft, GraduationCap, Users, BookOpen } from 'lucide-react'
 
 const courses = [
@@ -43,7 +44,7 @@ export default function DiplomaPage() {
             <span>Back to Home</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>

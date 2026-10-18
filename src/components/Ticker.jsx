@@ -1,13 +1,9 @@
 import React from 'react'
 import { Megaphone } from 'lucide-react'
+import announcementsData from '../data/announcements.json'
 
-const announcements = [
-  '📢 Diploma Admission 2025-26 — Spot Admission Dates Announced',
-  '📋 Previous Year Question Papers now available online',
-  '🏆 GPTC Kannur students excel in University Examinations',
-  '📝 Online Grievance Redressal System is now active',
-  '🎓 Short Term Courses — New batches starting soon',
-]
+const rawList = announcementsData?.announcements || []
+const announcements = rawList.map(item => (typeof item === 'string' ? item : item?.message || '')).filter(Boolean)
 
 export default function Ticker() {
   return (

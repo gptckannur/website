@@ -1,19 +1,21 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { Building2, Zap, Cpu, Cog, Shirt, Trees, Clock, Users, ArrowRight } from 'lucide-react'
 import useTilt from '../hooks/useTilt'
+import deptCardsData from '../data/department_cards.json'
 
-const departments = [
-  { id: 'dept-civil', slug: 'civil', icon: Building2, title: 'Civil Engineering', desc: 'Design, construct, and maintain the infrastructure that shapes our world.', duration: '3 Years', seats: '60 Seats', hue: 200, delay: 100 },
-  { id: 'dept-electrical', slug: 'electrical', icon: Zap, title: 'Electrical Engineering', desc: 'Master the science of electrical systems driving modern civilization.', duration: '3 Years', seats: '60 Seats', hue: 45, delay: 200 },
-  { id: 'dept-electronics', slug: 'electronics', icon: Cpu, title: 'Electronics Engineering', desc: 'Explore circuits, communication systems, and embedded electronics.', duration: '3 Years', seats: '60 Seats', hue: 150, delay: 300 },
-  { id: 'dept-mechanical', slug: 'mechanical', icon: Cog, title: 'Mechanical Engineering', desc: 'From thermodynamics to manufacturing — design, analyze, and create.', duration: '3 Years', seats: '60 Seats', hue: 10, delay: 100 },
-  { id: 'dept-textile', slug: 'textile', icon: Shirt, title: 'Textile Technology', desc: 'Dive into the science of fibres, fabrics, and fashion technology.', duration: '3 Years', seats: '60 Seats', hue: 280, delay: 200 },
-  { id: 'dept-wood', slug: 'wood', icon: Trees, title: 'Wood & Paper Technology', desc: 'A rare discipline focusing on sustainable wood processing and eco-friendly material.', duration: '3 Years', seats: '43 Seats', hue: 100, delay: 300 },
-]
+const ICON_MAP = { Building2, Zap, Cpu, Cog, Shirt, Trees }
+
+const rawDepts = Array.isArray(deptCardsData) ? deptCardsData : (deptCardsData?.departments || [])
+
+const departments = rawDepts.map((d, i) => ({
+  ...d,
+  id: `dept-${d.slug}`,
+  delay: ((i % 3) + 1) * 100,
+}))
 
 function DeptCard({ dept }) {
-  const Icon = dept.icon
+  const Icon = ICON_MAP[dept.icon] || Building2
   const tiltRef = useTilt({ max: 15, scale: 1.05, speed: 400 })
 
   return (

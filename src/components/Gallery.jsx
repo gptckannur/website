@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { X, ChevronLeft, ChevronRight, Maximize2, Camera, Trophy, Users, Building } from 'lucide-react'
+import galleryData from '../data/gallery.json'
+import { GALLERY_IMAGES as FALLBACK_GALLERY } from '../mediaPaths'
 
-const galleryImages = [
-  { src: '/gallery/college-gate.jpg', caption: 'Govt. Polytechnic College, Kannur — Main Entrance Gate (Est. 1958)', category: 'campus', size: 'large' },
-  { src: '/gallery/Achievement1.jpg', caption: 'Third Prize — Seminar Competition, CALPIO 2026', category: 'achievements', size: 'large' },
-  { src: '/gallery/Achievement2.jpg', caption: 'First Prize — Seminar Competition, CALPIO 2026', category: 'achievements', size: 'large' },
-  { src: '/gallery/SPORTS.jpeg', caption: 'Inter Poly State Table Tennis — 2nd Runner Up', category: 'sports', size: 'tall' },
-]
+const GALLERY_IMAGES = Array.isArray(galleryData?.images) ? galleryData.images : FALLBACK_GALLERY
 
 const categories = [
   { key: 'all', label: 'All Photos', icon: Camera },
@@ -25,10 +22,10 @@ export default function Gallery() {
   const thumbsRef = useRef(null)
 
   const filteredImages = activeCategory === 'all'
-    ? galleryImages
-    : galleryImages.filter(img => img.category === activeCategory)
+    ? GALLERY_IMAGES
+    : GALLERY_IMAGES.filter(img => img.category === activeCategory)
 
-  const filteredToOriginal = filteredImages.map(img => galleryImages.indexOf(img))
+  const filteredToOriginal = filteredImages.map(img => GALLERY_IMAGES.indexOf(img))
 
   const handleCategoryChange = (cat) => {
     if (cat === activeCategory) return
@@ -49,11 +46,11 @@ export default function Gallery() {
 
   const goNext = useCallback(() => {
     setLightboxLoaded(false)
-    setActiveImage(p => (p + 1) % galleryImages.length)
+    setActiveImage(p => (p + 1) % GALLERY_IMAGES.length)
   }, [])
   const goPrev = useCallback(() => {
     setLightboxLoaded(false)
-    setActiveImage(p => (p - 1 + galleryImages.length) % galleryImages.length)
+    setActiveImage(p => (p - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length)
   }, [])
 
   useEffect(() => {
@@ -126,7 +123,7 @@ export default function Gallery() {
               >
                 <div className={`gallery__card-skeleton ${imageLoaded[`${activeCategory}-${i}`] ? 'loaded' : ''}`} />
                 <img
-                  src={`${import.meta.env.BASE_URL}${img.src.replace(/^\//, '')}`}
+                  src={img.src}
                   alt={img.caption}
                   loading="lazy"
                   onLoad={() => handleImageLoad(`${activeCategory}-${i}`)}
@@ -158,10 +155,10 @@ export default function Gallery() {
         <div className="gallery-lightbox__backdrop" />
         <div className="gallery-lightbox__topbar" onClick={(e) => e.stopPropagation()}>
           <span className="gallery-lightbox__counter">
-            {activeImage + 1} <span>/ {galleryImages.length}</span>
+            {activeImage + 1} <span>/ {GALLERY_IMAGES.length}</span>
           </span>
           <span className="gallery-lightbox__title">
-            {galleryImages[activeImage]?.caption}
+            {GALLERY_IMAGES[activeImage]?.caption}
           </span>
           <button className="gallery-lightbox__close" onClick={closeLightbox} aria-label="Close viewer">
             <X size={20} />
@@ -190,8 +187,8 @@ export default function Gallery() {
               <img
                 key={activeImage}
                 className="gallery-lightbox__image"
-                src={`${import.meta.env.BASE_URL}${galleryImages[activeImage].src.replace(/^\//, '')}`}
-                alt={galleryImages[activeImage].caption}
+                src={GALLERY_IMAGES[activeImage].src}
+                alt={GALLERY_IMAGES[activeImage].caption}
                 onLoad={() => setLightboxLoaded(true)}
               />
             </div>
@@ -201,14 +198,14 @@ export default function Gallery() {
         {lightboxOpen && (
           <div className="gallery-lightbox__thumbstrip" onClick={(e) => e.stopPropagation()}>
             <div className="gallery-lightbox__thumbs" ref={thumbsRef}>
-              {galleryImages.map((img, i) => (
+              {GALLERY_IMAGES.map((img, i) => (
                 <button
                   key={i}
                   className={`gallery-lightbox__thumb ${i === activeImage ? 'active' : ''}`}
                   onClick={() => { setLightboxLoaded(false); setActiveImage(i) }}
                   aria-label={img.caption}
                 >
-                  <img src={`${import.meta.env.BASE_URL}${img.src.replace(/^\//, '')}`} alt="" />
+                  <img src={img.src} alt="" />
                 </button>
               ))}
             </div>

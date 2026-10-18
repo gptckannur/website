@@ -1,0 +1,21 @@
+{
+  "topbar": [
+    {
+      "label": "Admissions Open",
+      "url": "https://www.polyadmission.org/",
+      "style": "badge",
+      "openInNewTab": true,
+      "order": 1
+    },
+    {
+      "label": "Anti-Ragging Helpline: 1800-180-5522",
+      "url": "https://antiragging.in/",
+      "style": "link",
+      "icon": "ShieldAlert",
+      "openInNewTab": true,
+      "order": 2
+    }
+  ],
+  "navbar": [],
+  "footer": []
+}

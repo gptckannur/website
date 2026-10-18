@@ -2,23 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
 import { ArrowLeft, Cpu, Users, Wrench } from 'lucide-react'
+import { LOGO, facultyPhoto } from '../mediaPaths'
 
-const facultyMembers = [
-  { name: 'RAJESH O K', designation: 'Head of Section (In-charge)', image: '/faculty/electronics/rajesh o k.jpeg' },
-  { name: 'SREEJITH', designation: 'Lecturer in Electronics', image: null },
-  { name: 'SUDHINA', designation: 'Lecturer', image: null },
-  { name: 'LIJI C A', designation: 'Lecturer', image: '/faculty/electronics/LIJI C A.jpeg' },
-  { name: 'JITHIN LAL V K', designation: 'Lecturer', image: '/faculty/electronics/JITHIN LAL V K.jpg' },
-]
+import facultyData from '../data/faculty/electronics.json'
 
-const labStaff = [
-  { name: 'MUHAMMED SHAFEEQ KP', designation: 'Demonstrator', image: null },
-  { name: 'SAYOOJ P', designation: 'Demonstrator', image: null },
-  { name: 'NASER P K', designation: 'Trade Instructor', image: null },
-  { name: 'NISANTH S P', designation: 'Trade Instructor', image: null },
-  { name: 'SHERLY P', designation: 'Tradesman', image: null },
-  { name: 'ABHIYA JOY', designation: 'Tradesman', image: null },
-]
+const facultyMembers = facultyData.facultyMembers || []
+const labStaff = facultyData.labStaff || []
 
 function FacultyCard({ member, index }) {
   const initials = member.name.split(' ').map(w => w[0]).join('').slice(0, 2)
@@ -26,7 +15,7 @@ function FacultyCard({ member, index }) {
     <div className="faculty-card" data-animate="fade-up" data-delay={index * 60}>
       <div className="faculty-card__avatar">
         {member.image ? (
-          <img src={`${import.meta.env.BASE_URL}${member.image.replace(/^\//, '')}`} alt={member.name} loading="lazy" />
+          <img src={member.image} alt={member.name} loading="lazy" />
         ) : (
           <div className="faculty-card__initials">{initials}</div>
         )}
@@ -68,7 +57,7 @@ export default function ElectronicsFacultyPage() {
             <span>Back to Electronics Dept.</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>

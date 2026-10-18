@@ -1,15 +1,14 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Lenis from 'lenis'
 import {
   ArrowLeft, Building2, Zap, Cpu, Cog, Shirt, Trees,
   Target, Eye, GraduationCap, BookOpen, Lightbulb,
-  CheckCircle, Users, Clock, Award
+  CheckCircle, Users, Clock, Award, X, ChevronLeft, ChevronRight, Maximize2
 } from 'lucide-react'
 import { departmentData } from '../data/departments'
-
-// Dynamically import all images from the department assets folders
-const allGalleryImages = import.meta.glob('/src/assets/departments/**/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG}', { eager: true, import: 'default' })
+import { deptHeroImage, DEPT_GALLERY } from '../mediaPaths'
+import deptGalleriesData from '../data/department_galleries.json'
 
 const deptIcons = {
   civil: Building2,
@@ -26,6 +25,12 @@ export default function DepartmentPage() {
   const lenisRef = useRef(null)
   const rafIdRef = useRef(null)
 
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxImages, setLightboxImages] = useState([])
+  const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [lightboxCategory, setLightboxCategory] = useState('')
+
   // Lenis smooth scroll
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -41,14 +46,49 @@ export default function DepartmentPage() {
     return () => { if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current); lenis.destroy() }
   }, [deptSlug])
 
-  // Filter images for this department
-  const facilitiesImages = Object.keys(allGalleryImages)
-    .filter(path => path.includes(`/departments/${deptSlug}/facilities/`))
-    .map(path => allGalleryImages[path])
+  // Get images for this department from editable JSON with fallback
+  const deptMedia = deptGalleriesData?.[deptSlug] || DEPT_GALLERY[deptSlug] || { facilities: [], achievements: [] }
+  const rawFacilities = deptMedia.facilities || []
+  const rawAchievements = deptMedia.achievements || []
+  const facilitiesImages = rawFacilities.map(f => (typeof f === 'string' ? f : f?.image || '')).filter(Boolean)
+  const achievementsImages = rawAchievements.map(a => (typeof a === 'string' ? a : a?.image || '')).filter(Boolean)
 
-  const achievementsImages = Object.keys(allGalleryImages)
-    .filter(path => path.includes(`/departments/${deptSlug}/achievements/`))
-    .map(path => allGalleryImages[path])
+  const openLightbox = (imagesList, index, categoryName) => {
+    setLightboxImages(imagesList)
+    setActiveImageIndex(index)
+    setLightboxCategory(categoryName)
+    setLightboxOpen(true)
+  }
+
+  const closeLightbox = () => {
+    setLightboxOpen(false)
+  }
+
+  const goNext = useCallback(() => {
+    if (lightboxImages.length === 0) return
+    setActiveImageIndex(prev => (prev + 1) % lightboxImages.length)
+  }, [lightboxImages.length])
+
+  const goPrev = useCallback(() => {
+    if (lightboxImages.length === 0) return
+    setActiveImageIndex(prev => (prev - 1 + lightboxImages.length) % lightboxImages.length)
+  }, [lightboxImages.length])
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (!lightboxOpen) return
+    document.body.style.overflow = 'hidden'
+    const handleKey = (e) => {
+      if (e.key === 'Escape') closeLightbox()
+      if (e.key === 'ArrowRight') goNext()
+      if (e.key === 'ArrowLeft') goPrev()
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => {
+      window.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [lightboxOpen, goNext, goPrev])
 
   // Scroll-reveal
   useEffect(() => {
@@ -86,7 +126,7 @@ export default function DepartmentPage() {
     <div className="subpage">
       {/* Hero */}
       <section className="dept-page__hero" style={{ '--dept-hue': dept.hue }}>
-        <div className="dept-page__hero-bg" style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/${deptSlug}.png)` }}></div>
+        <div className="dept-page__hero-bg" style={{ backgroundImage: `url(${deptHeroImage(deptSlug)})` }}></div>
         <div className="dept-page__hero-overlay"></div>
         <div className="container dept-page__hero-content">
           <div className="dept-page__hero-icon">
@@ -248,8 +288,21 @@ export default function DepartmentPage() {
             </h2>
             <div className="dept-page__gallery-grid">
               {facilitiesImages.map((src, i) => (
-                <div className="dept-page__gallery-item" key={i} data-animate="fade-up" data-delay={i * 100}>
-                  <img src={src} alt={`Facility ${i + 1}`} loading="lazy" />
+                <div 
+                  className="dept-page__gallery-item" 
+                  key={i} 
+                  data-animate="fade-up" 
+                  data-delay={i * 100}
+                  onClick={() => openLightbox(facilitiesImages, i, `${dept.title} — Facility ${i + 1}`)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View facility ${i + 1}`}
+                  onKeyDown={(e) => e.key === 'Enter' && openLightbox(facilitiesImages, i, `${dept.title} — Facility ${i + 1}`)}
+                >
+                  <img src={src} alt={`${dept.title} Facility ${i + 1}`} loading="lazy" />
+                  <div className="dept-page__gallery-overlay">
+                    <Maximize2 size={24} />
+                  </div>
                 </div>
               ))}
             </div>
@@ -267,13 +320,80 @@ export default function DepartmentPage() {
             </h2>
             <div className="dept-page__gallery-grid">
               {achievementsImages.map((src, i) => (
-                <div className="dept-page__gallery-item" key={i} data-animate="fade-up" data-delay={i * 100}>
-                  <img src={src} alt={`Achievement ${i + 1}`} loading="lazy" />
+                <div 
+                  className="dept-page__gallery-item" 
+                  key={i} 
+                  data-animate="fade-up" 
+                  data-delay={i * 100}
+                  onClick={() => openLightbox(achievementsImages, i, `${dept.title} — Achievement ${i + 1}`)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View achievement ${i + 1}`}
+                  onKeyDown={(e) => e.key === 'Enter' && openLightbox(achievementsImages, i, `${dept.title} — Achievement ${i + 1}`)}
+                >
+                  <img src={src} alt={`${dept.title} Achievement ${i + 1}`} loading="lazy" />
+                  <div className="dept-page__gallery-overlay">
+                    <Maximize2 size={24} />
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
+      )}
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && lightboxImages.length > 0 && (
+        <div
+          className="gallery-lightbox active"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Department Photo Viewer"
+        >
+          <div className="gallery-lightbox__backdrop" />
+          <div className="gallery-lightbox__topbar" onClick={(e) => e.stopPropagation()}>
+            <span className="gallery-lightbox__counter">
+              {activeImageIndex + 1} <span>/ {lightboxImages.length}</span>
+            </span>
+            <span className="gallery-lightbox__title">
+              {lightboxCategory}
+            </span>
+            <button className="gallery-lightbox__close" onClick={closeLightbox} aria-label="Close viewer">
+              <X size={20} />
+            </button>
+          </div>
+
+          {lightboxImages.length > 1 && (
+            <>
+              <button
+                className="gallery-lightbox__arrow gallery-lightbox__arrow--prev"
+                onClick={(e) => { e.stopPropagation(); goPrev() }}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                className="gallery-lightbox__arrow gallery-lightbox__arrow--next"
+                onClick={(e) => { e.stopPropagation(); goNext() }}
+                aria-label="Next image"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </>
+          )}
+
+          <div className="gallery-lightbox__stage" onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-lightbox__image-wrap loaded">
+              <img
+                key={activeImageIndex}
+                className="gallery-lightbox__image"
+                src={lightboxImages[activeImageIndex]}
+                alt={lightboxCategory}
+              />
+            </div>
+          </div>
+        </div>
       )}
 
       {/* CTA */}

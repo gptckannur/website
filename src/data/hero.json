@@ -1,0 +1,13 @@
+{
+  "badge": "Established 1958 • AICTE Approved",
+  "titlePrefix": "Government Polytechnic",
+  "titleAccent": "College Kannur",
+  "tagline": "\"Knowledge is Power\"",
+  "description": "Empowering youth through excellence in technical education since 1958. Shaping valuable resources for industry and society at Thottada, Kannur.",
+  "stats": [
+    { "number": 65, "hasPlus": true, "label": "Years of Excellence" },
+    { "number": 6, "hasPlus": false, "label": "Departments" },
+    { "number": 1000, "hasPlus": true, "label": "Students" },
+    { "number": 50, "hasPlus": true, "label": "Expert Faculty" }
+  ]
+}

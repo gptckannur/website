@@ -1,11 +1,27 @@
 import React, { useEffect, useRef, useCallback } from 'react'
 import { Award, GraduationCap, Info } from 'lucide-react'
 import CountUp from '../hooks/CountUp'
+import { HERO_VIDEO, HERO_POSTER } from '../mediaPaths'
+import heroData from '../data/hero.json'
 
 export default function Hero({ onNavigate }) {
   const particlesRef = useRef(null)
   const heroRef = useRef(null)
   const contentRef = useRef(null)
+
+  const {
+    badge = 'Established 1958 • AICTE Approved',
+    titlePrefix = 'Government Polytechnic',
+    titleAccent = 'College Kannur',
+    tagline = '"Knowledge is Power"',
+    description = 'Empowering youth through excellence in technical education since 1958.',
+    stats = [
+      { number: 65, hasPlus: true, label: 'Years of Excellence' },
+      { number: 6, hasPlus: false, label: 'Departments' },
+      { number: 1000, hasPlus: true, label: 'Students' },
+      { number: 50, hasPlus: true, label: 'Expert Faculty' },
+    ]
+  } = heroData || {}
 
   useEffect(() => {
     const container = particlesRef.current
@@ -90,8 +106,8 @@ export default function Hero({ onNavigate }) {
       <div className="hero__bg">
         <video
           className="hero__bg-video"
-          src={`${import.meta.env.BASE_URL}videos/campus-scroll.mp4`}
-          poster={`${import.meta.env.BASE_URL}images/college-gate.jpg`}
+          src={HERO_VIDEO}
+          poster={HERO_POSTER}
           autoPlay
           loop
           muted
@@ -114,18 +130,17 @@ export default function Hero({ onNavigate }) {
       <div className="container hero__content" ref={contentRef}>
         <div className="hero__badge" data-animate="fade-up">
           <Award size={16} />
-          <span>Established 1958 • AICTE Approved</span>
+          <span>{badge}</span>
         </div>
         <h1 className="hero__title" data-animate="fade-up" data-delay="100">
-          Government Polytechnic<br />
-          <span className="hero__title-accent">College Kannur</span>
+          {titlePrefix}<br />
+          <span className="hero__title-accent">{titleAccent}</span>
         </h1>
         <p className="hero__tagline" data-animate="fade-up" data-delay="200">
-          "Knowledge is Power"
+          {tagline}
         </p>
         <p className="hero__description" data-animate="fade-up" data-delay="300">
-          Empowering youth through excellence in technical education since 1958.
-          Shaping valuable resources for industry and society at Thottada, Kannur.
+          {description}
         </p>
         <div className="hero__actions" data-animate="fade-up" data-delay="400">
           <button className="btn btn--primary" onClick={() => onNavigate('departments')}>
@@ -138,25 +153,13 @@ export default function Hero({ onNavigate }) {
           </button>
         </div>
         <div className="hero__stats" data-animate="fade-up" data-delay="500">
-          <div className="hero__stat">
-            <span className="hero__stat-number"><CountUp end={65} /></span>
-            <span className="hero__stat-plus">+</span>
-            <span className="hero__stat-label">Years of Excellence</span>
-          </div>
-          <div className="hero__stat">
-            <span className="hero__stat-number"><CountUp end={6} /></span>
-            <span className="hero__stat-label">Departments</span>
-          </div>
-          <div className="hero__stat">
-            <span className="hero__stat-number"><CountUp end={1000} /></span>
-            <span className="hero__stat-plus">+</span>
-            <span className="hero__stat-label">Students</span>
-          </div>
-          <div className="hero__stat">
-            <span className="hero__stat-number"><CountUp end={50} /></span>
-            <span className="hero__stat-plus">+</span>
-            <span className="hero__stat-label">Expert Faculty</span>
-          </div>
+          {stats.map((st, i) => (
+            <div className="hero__stat" key={i}>
+              <span className="hero__stat-number"><CountUp end={st.number} /></span>
+              {st.hasPlus && <span className="hero__stat-plus">+</span>}
+              <span className="hero__stat-label">{st.label}</span>
+            </div>
+          ))}
         </div>
       </div>
       <div className="hero__scroll-indicator" onClick={() => onNavigate('about')}>

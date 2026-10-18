@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { HERO_SLIDES as FALLBACK_SLIDES } from '../mediaPaths'
+import sliderData from '../data/slider.json'
 
-const slides = [
-  { src: '/images/college-gate.jpg', title: 'Welcome to GPTC Kannur', subtitle: 'Excellence in Technical Education since 1958' },
-  { src: '/images/college-gate.jpg', title: 'World-Class Campus', subtitle: 'Modern facilities across 6 engineering departments' },
-  { src: 'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=1200&q=80', title: 'Learn by Doing', subtitle: 'Practical, industry-oriented diploma programmes' },
-  { src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', title: 'State-of-the-Art Labs', subtitle: 'Hands-on experience with modern equipment' },
-]
+const HERO_SLIDES = Array.isArray(sliderData?.slides) && sliderData.slides.length > 0
+  ? sliderData.slides
+  : FALLBACK_SLIDES
 
 export default function ImageSlider() {
   const [current, setCurrent] = useState(0)
@@ -19,8 +18,8 @@ export default function ImageSlider() {
     setTimeout(() => setIsTransitioning(false), 700)
   }, [isTransitioning])
 
-  const next = useCallback(() => goTo((current + 1) % slides.length), [current, goTo])
-  const prev = useCallback(() => goTo((current - 1 + slides.length) % slides.length), [current, goTo])
+  const next = useCallback(() => goTo((current + 1) % HERO_SLIDES.length), [current, goTo])
+  const prev = useCallback(() => goTo((current - 1 + HERO_SLIDES.length) % HERO_SLIDES.length), [current, goTo])
 
   // Auto-advance
   useEffect(() => {
@@ -43,9 +42,9 @@ export default function ImageSlider() {
       <div className="container">
         <div className="image-slider" role="region" aria-label="Campus photo slideshow" aria-roledescription="carousel">
           <div className="image-slider__track" style={{ transform: `translateX(-${current * 100}%)` }}>
-            {slides.map((slide, i) => (
-              <div className="image-slider__slide" key={i} role="tabpanel" aria-label={`Slide ${i + 1} of ${slides.length}`}>
-                <img src={slide.src.startsWith('http') ? slide.src : `${import.meta.env.BASE_URL}${slide.src.replace(/^\//, '')}`} alt={slide.title} loading={i === 0 ? 'eager' : 'lazy'} />
+            {HERO_SLIDES.map((slide, i) => (
+              <div className="image-slider__slide" key={i} role="tabpanel" aria-label={`Slide ${i + 1} of ${HERO_SLIDES.length}`}>
+                <img src={slide.src} alt={slide.title} loading={i === 0 ? 'eager' : 'lazy'} />
                 <div className="image-slider__overlay">
                   <h3>{slide.title}</h3>
                   <p>{slide.subtitle}</p>
@@ -60,7 +59,7 @@ export default function ImageSlider() {
             <ChevronRight size={22} />
           </button>
           <div className="image-slider__dots" role="tablist">
-            {slides.map((_, i) => (
+            {HERO_SLIDES.map((_, i) => (
               <button
                 key={i}
                 className={`image-slider__dot ${i === current ? 'active' : ''}`}

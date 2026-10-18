@@ -1,7 +1,23 @@
 import React from 'react'
 import { CheckCircle, MapPin, Calendar, Building, Factory } from 'lucide-react'
+import { COLLEGE_GATE } from '../mediaPaths'
+import aboutData from '../data/about.json'
 
 export default function About() {
+  const {
+    estYear = '1958',
+    heading = 'A Legacy of Technical Excellence',
+    paragraphs = [],
+    highlights = [
+      'AICTE Approved',
+      'SBTE Kerala Affiliated',
+      'Government Institution',
+      '6 Engineering Departments',
+      'Established 1958',
+      'Boys Hostel Facility',
+    ]
+  } = aboutData || {}
+
   return (
     <section className="section about" id="about">
       <div className="container">
@@ -15,53 +31,36 @@ export default function About() {
           <div className="about__image-wrapper" data-animate="fade-right">
             <div className="about__image-card">
               <img
-                src={`${import.meta.env.BASE_URL}images/college-gate.jpg`}
+                src={COLLEGE_GATE}
                 alt="GPTC Kannur Campus"
                 loading="lazy"
               />
               <div className="about__image-overlay">
-                <span>Est. 1958</span>
+                <span>Est. {estYear}</span>
               </div>
             </div>
           </div>
           <div className="about__content" data-animate="fade-left">
-            <h3 className="about__heading">A Legacy of <span className="gradient-text">Technical Excellence</span></h3>
-            <p className="about__text">
-              Govt. Polytechnic College, Kannur is situated at <strong>Thottada</strong> in Kannur Corporation.
-              Thottada is known as the <strong>Educational Head Quarters</strong> of the Kannur district.
-              A lot of educational institutions such as ITI, ITI (Women), ITI Regional Directorate, THS,
-              SN College, Chinmaya Institute of Technology, National Institute of Handloom and Textile
-              Technology, SN Trust Higher Secondary School, St. Francis EM School etc. are located around the Institution.
-            </p>
-            <p className="about__text">
-              Kannur Government Polytechnic was started in the year <strong>1958</strong> with a view to create
-              ample chances for the educated peoples to get technical training and hence to increase the pool
-              of specially trained, employed technicians. In the beginning there were 3 year diploma courses
-              in Civil Engineering, Mechanical Engineering, Electrical Engineering and Textile Technology.
-              Three year diploma in <strong>Wood & Paper Technology</strong> was started later in the year 1982.
-              A new diploma course in <strong>Electronics</strong> was started in 1987.
-            </p>
-            <p className="about__text">
-              Kannur is a hub of industries of various kinds. Keltron provides opportunities for Electronics students.
-              Traco Cables in Pinarayi absorbs Electronics Engineering graduates. Rubco factory in Thalassery and
-              Western India Plywoods Baliapatam provides placement for Wood and Paper Technology. Thottada has
-              recently harbored many automobile ventures, increasing the demand for Mechanical branch graduates.
-              The college is one of the biggest institutions in Kannur District and provides hostel facility for boys.
-            </p>
+            <h3 className="about__heading">{heading}</h3>
+            {paragraphs.map((p, i) => {
+              const text = typeof p === 'string' ? p : p?.paragraph || ''
+              return (
+                <p className="about__text" key={i}>
+                  {text}
+                </p>
+              )
+            })}
             <div className="about__highlights">
-              {[
-                { icon: CheckCircle, text: 'AICTE Approved' },
-                { icon: CheckCircle, text: 'SBTE Kerala Affiliated' },
-                { icon: CheckCircle, text: 'Government Institution' },
-                { icon: CheckCircle, text: '6 Engineering Departments' },
-                { icon: Calendar, text: 'Established 1958' },
-                { icon: Building, text: 'Boys Hostel Facility' },
-              ].map((item, i) => {
-                const Icon = item.icon
+              {highlights.map((rawItem, i) => {
+                const itemText = typeof rawItem === 'string' ? rawItem : rawItem?.item || ''
+                const lower = itemText.toLowerCase()
+                const isEst = lower.includes('established')
+                const isHostel = lower.includes('hostel')
+                const Icon = isEst ? Calendar : isHostel ? Building : CheckCircle
                 return (
                   <div className="about__highlight" key={i}>
                     <Icon size={16} />
-                    <span>{item.text}</span>
+                    <span>{itemText}</span>
                   </div>
                 )
               })}

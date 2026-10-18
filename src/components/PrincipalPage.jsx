@@ -2,8 +2,22 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
 import { ArrowLeft, Phone, Mail, Quote, GraduationCap, Lightbulb, Users, Target } from 'lucide-react'
+import { LOGO, PRINCIPAL_PHOTO } from '../mediaPaths'
+import principalData from '../data/principal.json'
 
 export default function PrincipalPage() {
+  const {
+    name = 'Dr. Asha Sukumaran',
+    designation = 'Principal',
+    institution = 'Govt. Polytechnic College Thottada',
+    photo = PRINCIPAL_PHOTO,
+    phone = '9400210189',
+    email = 'kannurgptc@gmail.com',
+    fullMessageTitle = "Empowering Tomorrow's Technologists Today",
+    leadText = 'Govt.Polytechnic College Thottada is a leading institution dedicated to empowering the youth...',
+    paragraphs = [],
+    closingText = "Join us in shaping the next generation of skilled professionals and entrepreneurs, driving Kerala's technological advancement and economic growth."
+  } = principalData || {}
   // Scroll-reveal observer
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,7 +47,7 @@ export default function PrincipalPage() {
             <span>Back to Home</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>
@@ -45,8 +59,8 @@ export default function PrincipalPage() {
         <div className="principal-page__hero-overlay"></div>
         <div className="container principal-page__hero-content">
           <span className="principal-page__label">From the Desk of the Principal</span>
-          <h1 className="principal-page__hero-title">Dr. Asha Sukumaran</h1>
-          <p className="principal-page__hero-subtitle">Principal, Govt. Polytechnic College Thottada</p>
+          <h1 className="principal-page__hero-title">{name}</h1>
+          <p className="principal-page__hero-subtitle">{designation}, {institution}</p>
         </div>
       </section>
 
@@ -59,26 +73,30 @@ export default function PrincipalPage() {
               <div className="principal-page__photo-card">
                 <div className="principal-page__photo-wrapper">
                   <img
-                    src={`${import.meta.env.BASE_URL}images/principal.jpg`}
-                    alt="Dr. Asha Sukumaran - Principal of Govt. Polytechnic College Thottada"
+                    src={photo || PRINCIPAL_PHOTO}
+                    alt={`${name} - ${designation} of ${institution}`}
                     className="principal-page__photo"
                   />
                   <div className="principal-page__photo-accent"></div>
                 </div>
                 <div className="principal-page__photo-info">
-                  <h3>Dr. Asha Sukumaran</h3>
-                  <span className="principal-page__designation">Principal</span>
-                  <span className="principal-page__institution">Govt. Polytechnic College Thottada</span>
+                  <h3>{name}</h3>
+                  <span className="principal-page__designation">{designation}</span>
+                  <span className="principal-page__institution">{institution}</span>
                 </div>
                 <div className="principal-page__contact-list">
-                  <a href="tel:9400210189" className="principal-page__contact-item">
-                    <Phone size={16} />
-                    <span>9400210189</span>
-                  </a>
-                  <a href="mailto:kannurgptc@gmail.com" className="principal-page__contact-item">
-                    <Mail size={16} />
-                    <span>kannurgptc@gmail.com</span>
-                  </a>
+                  {phone && (
+                    <a href={`tel:${phone}`} className="principal-page__contact-item">
+                      <Phone size={16} />
+                      <span>{phone}</span>
+                    </a>
+                  )}
+                  {email && (
+                    <a href={`mailto:${email}`} className="principal-page__contact-item">
+                      <Mail size={16} />
+                      <span>{email}</span>
+                    </a>
+                  )}
                 </div>
               </div>
 
@@ -128,45 +146,34 @@ export default function PrincipalPage() {
               <div className="principal-page__quote-block">
                 <Quote size={40} className="principal-page__quote-icon" />
                 <h2 className="principal-page__message-title">
-                  Empowering Tomorrow's Technologists Today
+                  {fullMessageTitle}
                 </h2>
               </div>
 
               <div className="principal-page__body">
-                <p className="principal-page__lead-text">
-                  Govt.Polytechnic College Thottada is a leading institution dedicated to empowering
-                  the youth by imparting excellence in technical education and prepare them as a
-                  valuable resource for industry and society.
-                </p>
+                {leadText && (
+                  <p className="principal-page__lead-text">
+                    {leadText}
+                  </p>
+                )}
 
-                <p>
-                  We provide value added technical education, fostering innovative thinking through
-                  effective teaching learning process. Our dedicated faculty, cutting edge facilities
-                  and industry collaborations ensure students receive a well-rounded education.
-                  The institute aims to nurture talented professionals by encouraging research and
-                  innovation and develop them into socially responsible leaders, by providing adequate
-                  infrastructure to impart finest quality skill education.
-                </p>
+                {paragraphs.map((p, i) => (
+                  <p key={i}>{typeof p === 'string' ? p : p?.paragraph || ''}</p>
+                ))}
 
-                <p>
-                  With a strong focus on hands-on learning, research, and innovation, our students
-                  gain practical skills and real-world experience. Our expert faculty,
-                  state-of-the-art infrastructure, and strategic industry partnerships ensure our
-                  graduates are job-ready and future-proof.
-                </p>
-
-                <p className="principal-page__closing-text">
-                  Join us in shaping the next generation of skilled professionals and entrepreneurs,
-                  driving Kerala's technological advancement and economic growth.
-                </p>
+                {closingText && (
+                  <p className="principal-page__closing-text">
+                    {closingText}
+                  </p>
+                )}
               </div>
 
               <div className="principal-page__signature">
                 <div className="principal-page__signature-line"></div>
                 <div className="principal-page__signature-info">
-                  <strong>Dr. Asha Sukumaran</strong>
-                  <span>Principal</span>
-                  <span>Govt. Polytechnic College Thottada, Kannur</span>
+                  <strong>{name}</strong>
+                  <span>{designation}</span>
+                  <span>{institution}, Kannur</span>
                 </div>
               </div>
             </article>

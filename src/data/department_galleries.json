@@ -1,0 +1,26 @@
+{
+  "civil": {
+    "facilities": [],
+    "achievements": []
+  },
+  "electrical": {
+    "facilities": [],
+    "achievements": []
+  },
+  "electronics": {
+    "facilities": [],
+    "achievements": []
+  },
+  "mechanical": {
+    "facilities": [],
+    "achievements": []
+  },
+  "textile": {
+    "facilities": [],
+    "achievements": []
+  },
+  "wood": {
+    "facilities": [],
+    "achievements": []
+  }
+}

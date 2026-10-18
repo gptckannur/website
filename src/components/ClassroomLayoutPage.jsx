@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
 import { ArrowLeft, Calculator, Download, LayoutGrid, RotateCcw } from 'lucide-react'
+import { LOGO } from '../mediaPaths'
 
 // ──────────────────────────────────────────────
 // ROLL NUMBER PARSER
@@ -217,7 +218,7 @@ export default function ClassroomLayoutPage() {
             <span>Back to Home</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>

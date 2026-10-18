@@ -1,0 +1,16 @@
+{
+  "facultyMembers": [
+    { "name": "SARATH D", "designation": "Head of the Department (In-charge)", "image": "/media/faculty/civil/SARATH D.jpg" },
+    { "name": "SMITHA K", "designation": "Lecturer", "image": "/media/faculty/civil/SMITHA K.jpg" },
+    { "name": "SWATHI KRISHNA BS", "designation": "Lecturer", "image": "/media/faculty/civil/SWATHI KRISHNA BS.jpg" },
+    { "name": "ASEEJA P K", "designation": "Lecturer", "image": "/media/faculty/civil/ASEEJA P K.jpg" },
+    { "name": "BINUSREE KS", "designation": "Lecturer", "image": "/media/faculty/civil/BINUSREE KS.jpg" },
+    { "name": "AMAL V K", "designation": "Lecturer", "image": "/media/faculty/civil/AMAL V K.jpg" }
+  ],
+  "labStaff": [
+    { "name": "PRAJEESHA T", "designation": "Demonstrator", "image": "/media/faculty/civil/PRAJEESHA T.jpg" },
+    { "name": "MEKHA SHANTHAKUMAR", "designation": "Demonstrator", "image": "/media/faculty/civil/MEKHA SHANTHAKUMAR.jpg" },
+    { "name": "MURUKADAS K K", "designation": "Trade Instructor", "image": "/media/faculty/civil/MURUKADAS K K.jpg" },
+    { "name": "ANEESH K K", "designation": "Trade Instructor", "image": "/media/faculty/civil/ANEESH K K.jpg" }
+  ]
+}

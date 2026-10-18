@@ -1,0 +1,17 @@
+{
+  "facultyMembers": [
+    { "name": "RAJESH O K", "designation": "Head of Section (In-charge)", "image": "/media/faculty/electronics/rajesh o k.jpeg" },
+    { "name": "SREEJITH", "designation": "Lecturer in Electronics", "image": "" },
+    { "name": "SUDHINA", "designation": "Lecturer", "image": "" },
+    { "name": "LIJI C A", "designation": "Lecturer", "image": "/media/faculty/electronics/LIJI C A.jpeg" },
+    { "name": "JITHIN LAL V K", "designation": "Lecturer", "image": "/media/faculty/electronics/JITHIN LAL V K.jpg" }
+  ],
+  "labStaff": [
+    { "name": "MUHAMMED SHAFEEQ KP", "designation": "Demonstrator", "image": "" },
+    { "name": "SAYOOJ P", "designation": "Demonstrator", "image": "" },
+    { "name": "NASER P K", "designation": "Trade Instructor", "image": "" },
+    { "name": "NISANTH S P", "designation": "Trade Instructor", "image": "" },
+    { "name": "SHERLY P", "designation": "Tradesman", "image": "" },
+    { "name": "ABHIYA JOY", "designation": "Tradesman", "image": "" }
+  ]
+}

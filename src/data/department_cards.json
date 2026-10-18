@@ -1,0 +1,58 @@
+{
+  "departments": [
+    {
+      "slug": "civil",
+      "icon": "Building2",
+      "title": "Civil Engineering",
+      "desc": "Design, construct, and maintain the infrastructure that shapes our world.",
+      "duration": "3 Years",
+      "seats": "60 Seats",
+      "hue": 200
+    },
+    {
+      "slug": "electrical",
+      "icon": "Zap",
+      "title": "Electrical Engineering",
+      "desc": "Master the science of electrical systems driving modern civilization.",
+      "duration": "3 Years",
+      "seats": "60 Seats",
+      "hue": 45
+    },
+    {
+      "slug": "electronics",
+      "icon": "Cpu",
+      "title": "Electronics Engineering",
+      "desc": "Explore circuits, communication systems, and embedded electronics.",
+      "duration": "3 Years",
+      "seats": "60 Seats",
+      "hue": 150
+    },
+    {
+      "slug": "mechanical",
+      "icon": "Cog",
+      "title": "Mechanical Engineering",
+      "desc": "From thermodynamics to manufacturing — design, analyze, and create.",
+      "duration": "3 Years",
+      "seats": "60 Seats",
+      "hue": 10
+    },
+    {
+      "slug": "textile",
+      "icon": "Shirt",
+      "title": "Textile Technology",
+      "desc": "Dive into the science of fibres, fabrics, and fashion technology.",
+      "duration": "3 Years",
+      "seats": "60 Seats",
+      "hue": 280
+    },
+    {
+      "slug": "wood",
+      "icon": "Trees",
+      "title": "Wood & Paper Technology",
+      "desc": "A rare discipline focusing on sustainable wood processing and eco-friendly material.",
+      "duration": "3 Years",
+      "seats": "43 Seats",
+      "hue": 100
+    }
+  ]
+}

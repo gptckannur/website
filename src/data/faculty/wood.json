@@ -1,0 +1,17 @@
+{
+  "facultyMembers": [
+    { "name": "SATHEESH KUMAR T K", "designation": "Head of the Department (In-charge)", "image": "/media/faculty/wood/SATHEESH KUMAR T K.jpg" },
+    { "name": "NIDHIN NARAYANAN P", "designation": "Lecturer", "image": "/media/faculty/wood/NIDHIN NARAYANAN P.jpeg" },
+    { "name": "VINAYAK K", "designation": "Lecturer", "image": "/media/faculty/wood/VINAYAK K.jpeg" },
+    { "name": "DIVYATHEJ M V", "designation": "Guest Lecturer", "image": "/media/faculty/wood/DIVYATHEJ M V.jpeg" },
+    { "name": "SHAJIN P RAJ", "designation": "Guest Lecturer", "image": "/media/faculty/wood/SHAJIN P RAJ.jpeg" }
+  ],
+  "labStaff": [
+    { "name": "SINI C P", "designation": "Demonstrator", "image": "/media/faculty/wood/SINI C P.jpeg" },
+    { "name": "BIJU K T", "designation": "Demonstrator", "image": "/media/faculty/wood/BIJU K T.jpeg" },
+    { "name": "PRAKASAN V", "designation": "Trade Instructor", "image": "/media/faculty/wood/PRAKASAN V.jpeg" },
+    { "name": "SAJITH P", "designation": "Trade Instructor", "image": "/media/faculty/wood/SAJITH P.jpeg" },
+    { "name": "GOKUL K G", "designation": "Tradesman", "image": "/media/faculty/wood/GOKUL K G.jpeg" },
+    { "name": "MUHAMMED ASHARUDHEEN T K", "designation": "Tradesman", "image": "/media/faculty/wood/MUHAMMED ASHARUDHEEN T K.jpeg" }
+  ]
+}

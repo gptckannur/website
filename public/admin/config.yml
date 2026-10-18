@@ -1,0 +1,643 @@
+# Decap CMS Complete & Rectified Configuration for GPTC Kannur Website
+
+# Enables local file-system editing when running 'npm run cms' or 'npx decap-server'
+local_backend: true
+
+backend:
+  name: github
+  repo: vinayakkakkan/GPTC-kannur
+  branch: main
+  base_url: https://gptc-cms-auth.workers.dev
+  auth_endpoint: auth
+
+# Media configuration
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  # ============================================================================
+  # 1. ANNOUNCEMENTS & NOTICES
+  # ============================================================================
+  - name: "announcements"
+    label: "Homepage Announcements (Ticker)"
+    files:
+      - file: "src/data/announcements.json"
+        label: "Announcements Ticker List"
+        name: "ticker"
+        fields:
+          - label: "Announcements"
+            name: "announcements"
+            widget: "list"
+            field: { label: "Announcement Message", name: "message", widget: "string" }
+
+  - name: "notices"
+    label: "College Notices & Circulars"
+    folder: "src/data/notices"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    format: "json"
+    fields:
+      - { label: "Notice Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Category", name: "category", widget: "select", options: ["General", "Exams", "Admissions", "Scholarships", "Events"] }
+      - { label: "Pinned / Urgent Notice?", name: "pinned", widget: "boolean", default: false }
+      - { label: "Attachment / PDF Document", name: "attachment", widget: "file", required: false }
+      - { label: "Notice Content", name: "body", widget: "markdown" }
+
+  # ============================================================================
+  # 2. HOMEPAGE & HERO SECTION
+  # ============================================================================
+  - name: "homepage"
+    label: "Hero Section & Stats"
+    files:
+      - file: "src/data/hero.json"
+        label: "Hero Content & Statistics"
+        name: "hero"
+        fields:
+          - { label: "Top Badge", name: "badge", widget: "string" }
+          - { label: "Title Prefix", name: "titlePrefix", widget: "string" }
+          - { label: "Title Accent (Colored)", name: "titleAccent", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Description Paragraph", name: "description", widget: "text" }
+          - label: "Animated Stat Counters"
+            name: "stats"
+            widget: "list"
+            summary: "{{fields.label}}: {{fields.number}}"
+            fields:
+              - { label: "Number", name: "number", widget: "number" }
+              - { label: "Show '+' suffix?", name: "hasPlus", widget: "boolean", default: true }
+              - { label: "Stat Label", name: "label", widget: "string" }
+
+  # ============================================================================
+  # 3. PRINCIPAL'S DESK
+  # ============================================================================
+  - name: "principal"
+    label: "Principal's Desk & Speech"
+    files:
+      - file: "src/data/principal.json"
+        label: "Principal Profile & Full Message"
+        name: "principal_profile"
+        fields:
+          - { label: "Principal Full Name", name: "name", widget: "string" }
+          - { label: "Designation", name: "designation", widget: "string" }
+          - { label: "Institution Name", name: "institution", widget: "string" }
+          - { label: "Principal Photo", name: "photo", widget: "image" }
+          - { label: "Direct Phone", name: "phone", widget: "string" }
+          - { label: "Official Email", name: "email", widget: "string" }
+          - { label: "Short Quote (Displayed on Homepage)", name: "homepageQuote", widget: "text" }
+          - { label: "Full Speech / Message Title", name: "fullMessageTitle", widget: "string" }
+          - { label: "Lead Introductory Paragraph", name: "leadText", widget: "text" }
+          - label: "Speech Paragraphs"
+            name: "paragraphs"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - { label: "Closing Sign-off Message", name: "closingText", widget: "text" }
+
+  # ============================================================================
+  # 4. ABOUT THE COLLEGE
+  # ============================================================================
+  - name: "about"
+    label: "About Us & Legacy"
+    files:
+      - file: "src/data/about.json"
+        label: "About College Story"
+        name: "about_details"
+        fields:
+          - { label: "Established Year", name: "estYear", widget: "string" }
+          - { label: "Section Heading", name: "heading", widget: "string" }
+          - label: "Story Paragraphs"
+            name: "paragraphs"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - label: "Key Highlights"
+            name: "highlights"
+            widget: "list"
+            field: { label: "Highlight Item", name: "item", widget: "string" }
+
+  # ============================================================================
+  # 5. CAMPUS FACILITIES & EVENTS
+  # ============================================================================
+  - name: "campus"
+    label: "Campus Facilities & Events"
+    files:
+      - file: "src/data/facilities.json"
+        label: "Campus Infrastructure & Facilities"
+        name: "facilities_list"
+        fields:
+          - label: "Facilities"
+            name: "facilities"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Facility ID", name: "id", widget: "string" }
+              - { label: "Facility Title", name: "title", widget: "string" }
+              - { label: "Facility Photo", name: "image", widget: "image", required: false }
+              - { label: "Icon Name", name: "icon", widget: "select", options: ["HeartHandshake", "Briefcase", "Shield", "BookMarked", "FlaskConical", "Wifi", "Dumbbell"] }
+              - { label: "Description", name: "desc", widget: "text" }
+
+      - file: "src/data/events.json"
+        label: "Campus Events & Activities"
+        name: "events_list"
+        fields:
+          - label: "Events"
+            name: "events"
+            widget: "list"
+            summary: "{{fields.title}} ({{fields.day}} {{fields.month}})"
+            fields:
+              - { label: "Event Title", name: "title", widget: "string" }
+              - { label: "Category", name: "category", widget: "select", options: ["NSS", "Sports", "Cultural", "Academic", "Workshop", "Placement"] }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Day (e.g. 27)", name: "day", widget: "string" }
+              - { label: "Month (e.g. DEC)", name: "month", widget: "string" }
+              - { label: "Featured Event?", name: "featured", widget: "boolean", default: false }
+              - { label: "Event Banner Image", name: "image", widget: "image", required: false }
+
+  # ============================================================================
+  # 6. PHOTO GALLERIES (HOMEPAGE & DEPARTMENTS)
+  # ============================================================================
+  - name: "galleries"
+    label: "Galleries (Campus & Depts)"
+    files:
+      - file: "src/data/gallery.json"
+        label: "Main Campus Photo Gallery"
+        name: "main_gallery"
+        fields:
+          - label: "Photos"
+            name: "images"
+            widget: "list"
+            summary: "{{fields.caption}} ({{fields.category}})"
+            fields:
+              - { label: "Photo Image", name: "src", widget: "image" }
+              - { label: "Caption / Description", name: "caption", widget: "string" }
+              - { label: "Category", name: "category", widget: "select", options: ["campus", "achievements", "sports"] }
+              - { label: "Grid Size", name: "size", widget: "select", options: ["normal", "large", "tall", "wide"], default: "normal" }
+
+      - file: "src/data/department_galleries.json"
+        label: "Department Labs & Achievements Photos"
+        name: "dept_galleries"
+        fields:
+          # Civil Engineering
+          - label: "Civil Engineering — Facilities & Labs"
+            name: "civil"
+            widget: "object"
+            fields:
+              - label: "Facilities & Lab Photos"
+                name: "facilities"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+              - label: "Student & Dept Achievement Photos"
+                name: "achievements"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+
+          # Electrical Engineering
+          - label: "Electrical Engineering — Facilities & Labs"
+            name: "electrical"
+            widget: "object"
+            fields:
+              - label: "Facilities & Lab Photos"
+                name: "facilities"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+              - label: "Student & Dept Achievement Photos"
+                name: "achievements"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+
+          # Electronics Engineering
+          - label: "Electronics Engineering — Facilities & Labs"
+            name: "electronics"
+            widget: "object"
+            fields:
+              - label: "Facilities & Lab Photos"
+                name: "facilities"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+              - label: "Student & Dept Achievement Photos"
+                name: "achievements"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+
+          # Mechanical Engineering
+          - label: "Mechanical Engineering — Facilities & Labs"
+            name: "mechanical"
+            widget: "object"
+            fields:
+              - label: "Facilities & Lab Photos"
+                name: "facilities"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+              - label: "Student & Dept Achievement Photos"
+                name: "achievements"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+
+          # Textile Technology
+          - label: "Textile Technology — Facilities & Labs"
+            name: "textile"
+            widget: "object"
+            fields:
+              - label: "Facilities & Lab Photos"
+                name: "facilities"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+              - label: "Student & Dept Achievement Photos"
+                name: "achievements"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+
+          # Wood and Paper Technology
+          - label: "Wood and Paper Technology — Facilities & Labs"
+            name: "wood"
+            widget: "object"
+            fields:
+              - label: "Facilities & Lab Photos"
+                name: "facilities"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+              - label: "Student & Dept Achievement Photos"
+                name: "achievements"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+
+  # ============================================================================
+  # 7. FACULTY & STAFF DIRECTORY
+  # ============================================================================
+  - name: "faculty"
+    label: "Faculty & Staff Directory"
+    files:
+      - file: "src/data/faculty/mechanical.json"
+        label: "Mechanical Engineering Faculty"
+        name: "mechanical_faculty"
+        fields:
+          - label: "Teaching Faculty"
+            name: "facultyMembers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+          - label: "Technical & Workshop Staff"
+            name: "labStaff"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+
+      - file: "src/data/faculty/civil.json"
+        label: "Civil Engineering Faculty"
+        name: "civil_faculty"
+        fields:
+          - label: "Teaching Faculty"
+            name: "facultyMembers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+          - label: "Technical & Workshop Staff"
+            name: "labStaff"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+
+      - file: "src/data/faculty/electrical.json"
+        label: "Electrical Engineering Faculty"
+        name: "electrical_faculty"
+        fields:
+          - label: "Teaching Faculty"
+            name: "facultyMembers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+          - label: "Technical & Workshop Staff"
+            name: "labStaff"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+
+      - file: "src/data/faculty/electronics.json"
+        label: "Electronics Engineering Faculty"
+        name: "electronics_faculty"
+        fields:
+          - label: "Teaching Faculty"
+            name: "facultyMembers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+          - label: "Technical & Workshop Staff"
+            name: "labStaff"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+
+      - file: "src/data/faculty/textile.json"
+        label: "Textile Technology Faculty"
+        name: "textile_faculty"
+        fields:
+          - label: "Teaching Faculty"
+            name: "facultyMembers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+              - { label: "Mobile", name: "mobile", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
+          - label: "Technical & Workshop Staff"
+            name: "labStaff"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+              - { label: "Mobile", name: "mobile", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
+
+      - file: "src/data/faculty/wood.json"
+        label: "Wood & Paper Technology Faculty"
+        name: "wood_faculty"
+        fields:
+          - label: "Teaching Faculty"
+            name: "facultyMembers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+          - label: "Technical & Workshop Staff"
+            name: "labStaff"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+
+      - file: "src/data/faculty/office.json"
+        label: "Administrative & Office Staff"
+        name: "office_staff"
+        fields:
+          - label: "Office & Ministerial Staff"
+            name: "officeStaff"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Section / Branch", name: "section", widget: "string", required: false }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+              - { label: "Phone / Mobile", name: "mobile", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
+          - label: "Office Workers & Support Staff"
+            name: "officeWorkers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+              - { label: "Phone / Mobile", name: "mobile", widget: "string", required: false }
+
+      - file: "src/data/faculty/general.json"
+        label: "General Department Faculty"
+        name: "general_staff"
+        fields:
+          - label: "Teaching Faculty (Applied Science & Humanities)"
+            name: "facultyMembers"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.designation}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Designation", name: "designation", widget: "string" }
+              - { label: "Subject / Discipline", name: "subject", widget: "string", required: false }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+              - { label: "Phone / Mobile", name: "mobile", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
+
+  - name: "contact"
+    label: "Contact & Location Info"
+    files:
+      - file: "src/data/contact.json"
+        label: "College Contact Details"
+        name: "contact_info"
+        fields:
+          - { label: "College Full Name", name: "collegeName", widget: "string" }
+          - { label: "Campus Address", name: "address", widget: "text" }
+          - { label: "Phone Number", name: "phone", widget: "string" }
+          - { label: "Alternate / Mobile Phone", name: "altPhone", widget: "string", required: false }
+          - { label: "Official Email", name: "email", widget: "string" }
+          - { label: "Office Working Hours", name: "officeHours", widget: "string" }
+
+  # ============================================================================
+  # 9. CUSTOM PAGES (WordPress-Style Dynamic Pages)
+  # ============================================================================
+  - name: "pages"
+    label: "📄 Custom Pages"
+    label_singular: "Page"
+    folder: "src/data/pages"
+    create: true
+    slug: "{{slug}}"
+    format: "json"
+    summary: "{{title}} ({{slug}})"
+    sortable_fields: ["order", "title"]
+    fields:
+      - { label: "Page Title", name: "title", widget: "string", hint: "The title displayed at the top of the page" }
+      - { label: "URL Slug", name: "slug", widget: "string", hint: "URL-friendly name, e.g. 'anti-ragging' creates /page/anti-ragging" }
+      - { label: "Hero Banner Image", name: "heroImage", widget: "image", required: false, hint: "Optional banner image shown behind the page title" }
+      - { label: "Published", name: "published", widget: "boolean", default: true, hint: "Unpublished pages won't appear on the website" }
+      - { label: "Sort Order", name: "order", widget: "number", default: 10, hint: "Lower numbers appear first in listings" }
+      - { label: "Page Content", name: "body", widget: "markdown", hint: "Use the rich text editor to write headings, lists, tables, links, and embed images" }
+      # ---- Link this page to homepage navigation ----
+      - { label: "🔗 Show in Top Bar", name: "showInTopbar", widget: "boolean", default: false, hint: "Display a link/badge for this page in the top header bar" }
+      - { label: "Top Bar Style", name: "topbarStyle", widget: "select", options: ["badge", "link"], default: "link", required: false, hint: "'badge' = highlighted colored button, 'link' = regular text link" }
+      - { label: "🔗 Show in Navbar Menu", name: "showInNavbar", widget: "boolean", default: false, hint: "Add this page as a menu item in the main navigation bar" }
+      - { label: "🔗 Show in Footer Links", name: "showInFooter", widget: "boolean", default: false, hint: "Add this page to the footer Quick Navigation section" }
+      - { label: "Navigation Sort Order", name: "navOrder", widget: "number", default: 10, required: false, hint: "Controls the position of this page's link among other nav items (lower = first)" }
+      - { label: "Builder Data (auto-managed)", name: "builderData", widget: "hidden", required: false }
+
+  # ============================================================================
+  # 10. NAVIGATION & MENUS (WordPress-Style Menu Manager)
+  # ============================================================================
+  - name: "navigation"
+    label: "🔗 Navigation & Menus"
+    files:
+      - file: "src/data/navigation.json"
+        label: "All Navigation Buttons & Links"
+        name: "nav_config"
+        fields:
+          - label: "Top Header Bar Buttons"
+            name: "topbar"
+            widget: "list"
+            summary: "{{fields.label}} ({{fields.style}})"
+            hint: "Buttons/links shown in the colored bar at the very top of the website"
+            fields:
+              - { label: "Button Label", name: "label", widget: "string" }
+              - { label: "Link URL", name: "url", widget: "string", hint: "Use /page/slug for internal pages, or full URL for external links" }
+              - { label: "Button Style", name: "style", widget: "select", options: ["badge", "link"], default: "link", hint: "'badge' = highlighted colored button, 'link' = regular text link" }
+              - { label: "Icon", name: "icon", widget: "select", options: ["none", "ShieldAlert", "ExternalLink", "Phone", "Mail"], default: "none", required: false }
+              - { label: "Open in New Tab?", name: "openInNewTab", widget: "boolean", default: false }
+              - { label: "Sort Order", name: "order", widget: "number", default: 10 }
+
+          - label: "Main Navbar Links"
+            name: "navbar"
+            widget: "list"
+            summary: "{{fields.label}}"
+            hint: "Additional menu items appended to the main navigation bar"
+            fields:
+              - { label: "Link Label", name: "label", widget: "string" }
+              - { label: "Link URL", name: "url", widget: "string", hint: "Use /page/slug for internal pages, or full URL for external links" }
+              - { label: "Open in New Tab?", name: "openInNewTab", widget: "boolean", default: false }
+              - { label: "Sort Order", name: "order", widget: "number", default: 10 }
+
+          - label: "Footer Quick Links"
+            name: "footer"
+            widget: "list"
+            summary: "{{fields.label}}"
+            hint: "Additional links shown in the footer's Quick Navigation section"
+            fields:
+              - { label: "Link Label", name: "label", widget: "string" }
+              - { label: "Link URL", name: "url", widget: "string", hint: "Use /page/slug for internal pages, or full URL for external links" }
+              - { label: "Open in New Tab?", name: "openInNewTab", widget: "boolean", default: false }
+              - { label: "Sort Order", name: "order", widget: "number", default: 10 }
+
+  # ============================================================================
+  # 11. VISION & MISSION
+  # ============================================================================
+  - name: "vision_mission"
+    label: "Vision & Mission"
+    files:
+      - file: "src/data/vision.json"
+        label: "Vision & Mission Content"
+        name: "vision_content"
+        fields:
+          - { label: "Vision Statement", name: "vision", widget: "text", hint: "The college's vision statement (displayed in quotes on the site)" }
+          - label: "Mission Points"
+            name: "missions"
+            widget: "list"
+            summary: "{{fields.point}}"
+            hint: "Each mission point is displayed as a bullet item under the Mission card"
+            field: { label: "Mission Point", name: "point", widget: "text" }
+
+  # ============================================================================
+  # 12. DEPARTMENT CARDS (HOMEPAGE)
+  # ============================================================================
+  - name: "department_cards"
+    label: "Department Cards (Homepage)"
+    files:
+      - file: "src/data/department_cards.json"
+        label: "Homepage Department Cards"
+        name: "dept_cards"
+        fields:
+          - label: "Department Cards"
+            name: "departments"
+            widget: "list"
+            summary: "{{fields.title}} ({{fields.seats}})"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "URL Slug", name: "slug", widget: "select", options: ["civil", "electrical", "electronics", "mechanical", "textile", "wood"] }
+              - { label: "Short Description", name: "desc", widget: "text", hint: "One-sentence description shown on the homepage card" }
+              - { label: "Duration", name: "duration", widget: "string", default: "3 Years" }
+              - { label: "Seats", name: "seats", widget: "string", hint: "e.g. '60 Seats'" }
+              - { label: "Card Accent Hue (0-360)", name: "hue", widget: "number", default: 200, hint: "HSL hue for the card's accent color theme" }
+              - { label: "Icon", name: "icon", widget: "select", options: ["Building2", "Zap", "Cpu", "Cog", "Shirt", "Trees"], hint: "Lucide icon displayed on the card" }
+
+  # ============================================================================
+  # 13. IMPORTANT & QUICK LINKS
+  # ============================================================================
+  - name: "links"
+    label: "Important & Quick Links"
+    files:
+      - file: "src/data/links.json"
+        label: "Links Section"
+        name: "links_section"
+        fields:
+          - label: "Important Links"
+            name: "importantLinks"
+            widget: "list"
+            summary: "{{fields.label}}"
+            hint: "External links shown under 'Important Links' column"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+          - label: "Quick Links"
+            name: "quickLinks"
+            widget: "list"
+            summary: "{{fields.label}}"
+            hint: "Links shown under 'Quick Links' column"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+          - label: "Anti-Ragging Info"
+            name: "antiRagging"
+            widget: "object"
+            hint: "National Anti-Ragging helpline details"
+            fields:
+              - { label: "Helpline Number", name: "phone", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Website URL", name: "url", widget: "string" }
+
+  # ============================================================================
+  # 14. HERO IMAGE SLIDER
+  # ============================================================================
+  - name: "slider"
+    label: "Hero Image Slider"
+    files:
+      - file: "src/data/slider.json"
+        label: "Homepage Slider Images"
+        name: "hero_slider"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            summary: "{{fields.title}}"
+            hint: "Images that rotate in the hero slider below the main banner"
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+
+  # ============================================================================
+  # 15. ACADEMICS / PROGRAMMES & RESOURCES
+  # ============================================================================
+  - name: "academics"
+    label: "Academics & Programmes"
+    files:
+      - file: "src/data/academics.json"
+        label: "Programmes & Resources Cards"
+        name: "academics_cards"
+        fields:
+          - label: "Programme Cards"
+            name: "programs"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Icon", name: "icon", widget: "select", options: ["BookOpen", "Rocket", "Monitor", "FileText"], hint: "Lucide icon for the card" }
+              - { label: "Tag / Badge", name: "tag", widget: "string", required: false, hint: "Short tag shown below description, e.g. 'Full Time • 3 Years'" }
+              - { label: "External Link URL", name: "link", widget: "string", required: false, hint: "If provided, a clickable link is shown on the card" }
+              - { label: "Link Button Text", name: "linkText", widget: "string", required: false, hint: "Text for the link button, e.g. 'Access Moodle →'" }
+

@@ -2,22 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
 import { ArrowLeft, Zap, Users, Wrench } from 'lucide-react'
+import { LOGO, facultyPhoto } from '../mediaPaths'
 
-const facultyMembers = [
-  { name: 'SHAJUL DINESH A', designation: 'Head of the Department (In-charge)', image: '/faculty/electrical/shajul dinesh a.jpg' },
-  { name: 'ASWANTHLAL A', designation: 'Lecturer', image: '/faculty/electrical/aswanthlal a.jpg' },
-  { name: 'LIJINA K', designation: 'Lecturer', image: '/faculty/electrical/LIJINA K.jpg' },
-  { name: 'DEEPAK C', designation: 'Lecturer', image: '/faculty/electrical/DEEPAK C.jpg' },
-  { name: 'VINESH BABU T P', designation: 'Lecturer', image: null },
-  { name: 'FASIL RAHMAN', designation: 'Lecturer', image: null },
-]
+import facultyData from '../data/faculty/electrical.json'
 
-const labStaff = [
-  { name: 'AJITH P.', designation: 'Demonstrator', image: '/faculty/electrical/AJITH P..jpg' },
-  { name: 'NIPUNLAL THOTTATHIL', designation: 'Demonstrator', image: '/faculty/electrical/NIPUNLAL THOTTATHIL.jpg' },
-  { name: 'TONY LUKOSE', designation: 'Demonstrator', image: '/faculty/electrical/TONY LUKOSE.jpg' },
-  { name: 'NISANTH S P', designation: 'Trade Instructor', image: null },
-]
+const facultyMembers = facultyData.facultyMembers || []
+const labStaff = facultyData.labStaff || []
 
 function FacultyCard({ member, index }) {
   const initials = member.name.split(' ').map(w => w[0]).join('').slice(0, 2)
@@ -25,7 +15,7 @@ function FacultyCard({ member, index }) {
     <div className="faculty-card" data-animate="fade-up" data-delay={index * 60}>
       <div className="faculty-card__avatar">
         {member.image ? (
-          <img src={`${import.meta.env.BASE_URL}${member.image.replace(/^\//, '')}`} alt={member.name} loading="lazy" />
+          <img src={member.image} alt={member.name} loading="lazy" />
         ) : (
           <div className="faculty-card__initials">{initials}</div>
         )}
@@ -67,7 +57,7 @@ export default function ElectricalFacultyPage() {
             <span>Back to Electrical Dept.</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>

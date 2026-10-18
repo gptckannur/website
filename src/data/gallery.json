@@ -1,0 +1,28 @@
+{
+  "images": [
+    {
+      "src": "/media/gallery/campus/college-gate.jpg",
+      "caption": "Govt. Polytechnic College, Kannur — Main Entrance Gate (Est. 1958)",
+      "category": "campus",
+      "size": "large"
+    },
+    {
+      "src": "/media/gallery/achievements/Achievement1.jpg",
+      "caption": "Third Prize — Seminar Competition, CALPIO 2026",
+      "category": "achievements",
+      "size": "large"
+    },
+    {
+      "src": "/media/gallery/achievements/Achievement2.jpg",
+      "caption": "First Prize — Seminar Competition, CALPIO 2026",
+      "category": "achievements",
+      "size": "large"
+    },
+    {
+      "src": "/media/gallery/sports/SPORTS.jpeg",
+      "caption": "Inter Poly State Table Tennis — 2nd Runner Up",
+      "category": "sports",
+      "size": "tall"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "facilities": [
+    {
+      "id": "facility-nss",
+      "icon": "HeartHandshake",
+      "title": "NSS Unit",
+      "image": "/media/events/event-1.jpg",
+      "desc": "Active National Service Scheme unit promoting community service, social responsibility, and nation building through voluntary activities."
+    },
+    {
+      "id": "facility-tpc",
+      "icon": "Briefcase",
+      "title": "Training & Placement Cell (TPC)",
+      "image": "/media/placement/Training_9-11.jpg",
+      "desc": "Dedicated placement cell connecting students with industry opportunities, internships, and career guidance for successful employment."
+    },
+    {
+      "id": "facility-ncc",
+      "icon": "Shield",
+      "title": "National Cadet Corps (NCC)",
+      "image": "/media/events/event-2.jpg",
+      "desc": "NCC unit fostering discipline, leadership, and patriotism among students through military training and community development programs."
+    },
+    {
+      "id": "facility-library",
+      "icon": "BookMarked",
+      "title": "Central Library",
+      "image": "",
+      "desc": "Well-stocked with technical books, journals, periodicals, and digital resources for comprehensive learning."
+    },
+    {
+      "id": "facility-labs",
+      "icon": "FlaskConical",
+      "title": "Advanced Laboratories",
+      "image": "",
+      "desc": "Modern, fully-equipped labs for all departments with latest instruments, machines, and software tools."
+    },
+    {
+      "id": "facility-internet",
+      "icon": "Wifi",
+      "title": "Internet & IT Infrastructure",
+      "image": "",
+      "desc": "High-speed internet and computer labs with modern software for digital learning and research."
+    },
+    {
+      "id": "facility-sports",
+      "icon": "Dumbbell",
+      "title": "Sports & Gymnasium",
+      "image": "/media/gallery/sports/SPORTS.jpeg",
+      "desc": "Sports grounds and indoor facilities for physical fitness, competitive sports, and extracurricular activities."
+    }
+  ]
+}

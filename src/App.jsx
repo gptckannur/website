@@ -30,6 +30,10 @@ const TextileFacultyPage = lazy(() => import('./components/TextileFacultyPage'))
 const ElectronicsFacultyPage = lazy(() => import('./components/ElectronicsFacultyPage'))
 const CivilFacultyPage = lazy(() => import('./components/CivilFacultyPage'))
 const ElectricalFacultyPage = lazy(() => import('./components/ElectricalFacultyPage'))
+const OfficeStaffPage = lazy(() => import('./components/OfficeStaffPage'))
+const GeneralStaffPage = lazy(() => import('./components/GeneralStaffPage'))
+
+import CustomPage from './components/CustomPage'
 
 import SmoothScroll from './components/SmoothScroll'
 
@@ -122,6 +126,13 @@ function HomePage() {
   )
 }
 
+function AdminRedirect() {
+  useEffect(() => {
+    window.location.replace('/admin/index.html')
+  }, [])
+  return null
+}
+
 function MainLayout() {
   return (
     <>
@@ -141,6 +152,12 @@ function MainLayout() {
           <Route path="/electronics-faculty" element={<ElectronicsFacultyPage />} />
           <Route path="/civil-faculty" element={<CivilFacultyPage />} />
           <Route path="/electrical-faculty" element={<ElectricalFacultyPage />} />
+          <Route path="/office-staff" element={<OfficeStaffPage />} />
+          <Route path="/general-staff" element={<GeneralStaffPage />} />
+          <Route path="/staff" element={<OfficeStaffPage />} />
+          <Route path="/page/:slug" element={<CustomPage />} />
+          <Route path="/admin" element={<AdminRedirect />} />
+          <Route path="/admin/*" element={<AdminRedirect />} />
         </Routes>
       </Suspense>
     </>

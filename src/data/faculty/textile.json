@@ -1,0 +1,69 @@
+{
+  "facultyMembers": [
+    {
+      "name": "P SIVA KRISHNA",
+      "designation": "Lecturer in Textile Technology (HOD In-charge)",
+      "image": "/media/faculty/textile/P SIVA KRISHNA.jpg",
+      "mobile": "+91 8019980166",
+      "email": "psk@gptckannur.ac.in"
+    },
+    {
+      "name": "GOLDA HONEY MADHU",
+      "designation": "Lecturer in Textile Technology",
+      "image": "/media/faculty/textile/GOLDA HONEY MADHU.jpg",
+      "mobile": "+91 8547658088",
+      "email": "goldamadhu@gmail.com"
+    },
+    {
+      "name": "ABHINAV VISHNU",
+      "designation": "Lecturer in Textile Technology",
+      "image": "/media/faculty/textile/ABHINAV VISHNU.jpg",
+      "mobile": "+91 7012993944",
+      "email": "abhinavvishnu9@gmail.com"
+    },
+    {
+      "name": "AZHARUDHEEN T",
+      "designation": "Guest Lecturer in Textile Technology",
+      "image": "/media/faculty/textile/AZHARUDHEEN T.jpg",
+      "mobile": "+91 8113097654",
+      "email": "psk@gptckannur.ac.in"
+    },
+    {
+      "name": "ANEESH KUMAR PD",
+      "designation": "Lecturer in Textile Technology",
+      "image": "/media/faculty/textile/ANEESH KUMAR PD.jpg",
+      "mobile": "+91 9656821660",
+      "email": "aneeshkmr21@gmail.com"
+    },
+    {
+      "name": "ANOOP A N",
+      "designation": "Guest Lecturer in Textile Technology",
+      "image": "/media/faculty/textile/ANOOP A N.jpg",
+      "mobile": "",
+      "email": ""
+    }
+  ],
+  "labStaff": [
+    {
+      "name": "VIVEK K C",
+      "designation": "Demonstrator",
+      "image": "/media/faculty/textile/VIVEK K C.jpg",
+      "mobile": "+91 9495461686",
+      "email": "VKC9080@gmail.com"
+    },
+    {
+      "name": "KIRAN MK",
+      "designation": "Trade Instructor",
+      "image": "/media/faculty/textile/KIRAN MK.jpg",
+      "mobile": "+91 8019980166",
+      "email": "kiranaravind.mk@gmail.com"
+    },
+    {
+      "name": "RANJITHKUMAR K",
+      "designation": "Trade Instructor",
+      "image": "/media/faculty/textile/RANJITHKUMAR K.jpg",
+      "mobile": "+91 7902288746",
+      "email": "jithoosrk@gptckannur.ac.in"
+    }
+  ]
+}

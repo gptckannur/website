@@ -2,75 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
 import { ArrowLeft, Shirt, Users, Wrench, Phone, Mail } from 'lucide-react'
+import { LOGO, facultyPhoto } from '../mediaPaths'
 
-const facultyMembers = [
-  { 
-    name: 'P SIVA KRISHNA', 
-    designation: 'Lecturer in Textile Technology (HOD In-charge)', 
-    image: '/faculty/textile/P SIVA KRISHNA.jpg',
-    mobile: '+91 8019980166',
-    email: 'psk@gptckannur.ac.in'
-  },
-  { 
-    name: 'GOLDA HONEY MADHU', 
-    designation: 'Lecturer in Textile Technology', 
-    image: '/faculty/textile/GOLDA HONEY MADHU.jpg',
-    mobile: '+91 8547658088',
-    email: 'goldamadhu@gmail.com'
-  },
-  { 
-    name: 'ABHINAV VISHNU', 
-    designation: 'Lecturer in Textile Technology', 
-    image: '/faculty/textile/ABHINAV VISHNU.jpg',
-    mobile: '+91 7012993944',
-    email: 'abhinavvishnu9@gmail.com'
-  },
-  { 
-    name: 'AZHARUDHEEN T', 
-    designation: 'Guest Lecturer in Textile Technology', 
-    image: '/faculty/textile/AZHARUDHEEN T.jpg',
-    mobile: '+91 8113097654',
-    email: 'psk@gptckannur.ac.in'
-  },
-  { 
-    name: 'ANEESH KUMAR PD', 
-    designation: 'Lecturer in Textile Technology', 
-    image: '/faculty/textile/ANEESH KUMAR PD.jpg',
-    mobile: '+91 9656821660',
-    email: 'aneeshkmr21@gmail.com'
-  },
-  { 
-    name: 'ANOOP A N', 
-    designation: 'Guest Lecturer in Textile Technology', 
-    image: '/faculty/textile/ANOOP A N.jpg',
-    mobile: null,
-    email: null
-  },
-]
+import facultyData from '../data/faculty/textile.json'
 
-const labStaff = [
-  { 
-    name: 'VIVEK K C', 
-    designation: 'Demonstrator', 
-    image: '/faculty/textile/VIVEK K C.jpg',
-    mobile: '+91 9495461686',
-    email: 'VKC9080@gmail.com'
-  },
-  { 
-    name: 'KIRAN MK', 
-    designation: 'Trade Instructor', 
-    image: '/faculty/textile/KIRAN MK.jpg',
-    mobile: '+91 8019980166',
-    email: 'kiranaravind.mk@gmail.com'
-  },
-  { 
-    name: 'RANJITHKUMAR K', 
-    designation: 'Trade Instructor', 
-    image: '/faculty/textile/RANJITHKUMAR K.jpg',
-    mobile: '+91 7902288746',
-    email: 'jithoosrk@gptckannur.ac.in'
-  },
-]
+const facultyMembers = facultyData.facultyMembers || []
+const labStaff = facultyData.labStaff || []
 
 function FacultyCard({ member, index }) {
   const initials = member.name.split(' ').map(w => w[0]).join('').slice(0, 2)
@@ -78,7 +15,7 @@ function FacultyCard({ member, index }) {
     <div className="faculty-card faculty-card--with-contact" data-animate="fade-up" data-delay={index * 60}>
       <div className="faculty-card__avatar">
         {member.image ? (
-          <img src={`${import.meta.env.BASE_URL}${member.image.replace(/^\//, '')}`} alt={member.name} loading="lazy" />
+          <img src={member.image} alt={member.name} loading="lazy" />
         ) : (
           <div className="faculty-card__initials">{initials}</div>
         )}
@@ -134,7 +71,7 @@ export default function TextileFacultyPage() {
             <span>Back to Textile Dept.</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>

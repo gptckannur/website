@@ -2,23 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Lenis from 'lenis'
 import { ArrowLeft, Trees, Users, Wrench } from 'lucide-react'
+import { LOGO, facultyPhoto } from '../mediaPaths'
 
-const facultyMembers = [
-  { name: 'SATHEESH KUMAR T K', designation: 'Head of the Department (In-charge)', image: '/faculty/wood/SATHEESH KUMAR T K.jpg' },
-  { name: 'NIDHIN NARAYANAN P', designation: 'Lecturer', image: '/faculty/wood/NIDHIN NARAYANAN P.jpeg' },
-  { name: 'VINAYAK K', designation: 'Lecturer', image: '/faculty/wood/VINAYAK K.jpeg' },
-  { name: 'DIVYATHEJ M V', designation: 'Guest Lecturer', image: '/faculty/wood/DIVYATHEJ M V.jpeg' },
-  { name: 'SHAJIN P RAJ', designation: 'Guest Lecturer', image: '/faculty/wood/SHAJIN P RAJ.jpeg' },
-]
+import facultyData from '../data/faculty/wood.json'
 
-const labStaff = [
-  { name: 'SINI C P', designation: 'Demonstrator', image: '/faculty/wood/SINI C P.jpeg' },
-  { name: 'BIJU K T', designation: 'Demonstrator', image: '/faculty/wood/BIJU K T.jpeg' },
-  { name: 'PRAKASAN V', designation: 'Trade Instructor', image: '/faculty/wood/PRAKASAN V.jpeg' },
-  { name: 'SAJITH P', designation: 'Trade Instructor', image: '/faculty/wood/SAJITH P.jpeg' },
-  { name: 'GOKUL K G', designation: 'Tradesman', image: '/faculty/wood/GOKUL K G.jpeg' },
-  { name: 'MUHAMMED ASHARUDHEEN T K', designation: 'Tradesman', image: '/faculty/wood/MUHAMMED ASHARUDHEEN T K.jpeg' },
-]
+const facultyMembers = facultyData.facultyMembers || []
+const labStaff = facultyData.labStaff || []
 
 function FacultyCard({ member, index }) {
   const initials = member.name.split(' ').map(w => w[0]).join('').slice(0, 2)
@@ -26,7 +15,7 @@ function FacultyCard({ member, index }) {
     <div className="faculty-card" data-animate="fade-up" data-delay={index * 60}>
       <div className="faculty-card__avatar">
         {member.image ? (
-          <img src={`${import.meta.env.BASE_URL}${member.image.replace(/^\//, '')}`} alt={member.name} loading="lazy" />
+          <img src={member.image} alt={member.name} loading="lazy" />
         ) : (
           <div className="faculty-card__initials">{initials}</div>
         )}
@@ -68,7 +57,7 @@ export default function WoodFacultyPage() {
             <span>Back to Wood & Paper Dept.</span>
           </Link>
           <div className="principal-page__nav-brand">
-            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="GPTC Kannur" className="navbar__logo-img" />
+            <img src={LOGO} alt="GPTC Kannur" className="navbar__logo-img" />
             <span>Govt. Polytechnic College, Kannur</span>
           </div>
         </div>
