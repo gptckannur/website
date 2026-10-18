@@ -5,9 +5,9 @@ local_backend: true
 
 backend:
   name: github
-  repo: vinayakkakkan/GPTC-kannur
+  repo: gptckannur/website
   branch: main
-  base_url: https://gptc-cms-auth.workers.dev
+  base_url: https://gptc-cms-auth.governmentpolytechnickannur.workers.dev
   auth_endpoint: auth
 
 # Media configuration
